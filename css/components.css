@@ -1,0 +1,956 @@
+/* ==========================================================================
+   DOCKIT STATIQUE — components.css
+   --------------------------------------------------------------------------
+   Ce fichier regroupe tous les COMPOSANTS réutilisables du site :
+     1. Boutons (.btn-primary, .btn-outline, .btn-text)
+     2. Grille de cartes (.card-grid) et cartes (.card)
+     3. Cartes-listes (.list-card) avec compteur d'articles
+     4. Onglets « 3 étapes » du héros (.steps-tabs)
+     5. Démo du thème sombre/clair (.theme-demo)
+     6. Accordéon FAQ (.faq, .accordion)
+     7. Modale de recherche (.search-modal)
+     8. Badges et étiquettes (.tag)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. BOUTONS
+   -------------------------------------------------------------------------- */
+
+/* Base commune à tous les boutons (équivalent de .btn du thème original) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.6rem;
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: filter var(--transition-fast), color var(--transition-fast),
+    background-color var(--transition-fast), transform var(--transition-fast);
+  cursor: pointer;
+  line-height: 1.4;
+}
+
+/* Bouton plein : dégradé signature + texte blanc */
+.btn-primary {
+  background: var(--gradient-primary);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  color: #ffffff;
+  filter: brightness(1.08);       /* Légèrement plus lumineux au survol */
+  transform: translateY(-1px);
+}
+
+/* Bouton contour : bordure en dégradé réalisée avec la technique du
+   masque (padding 2px + mask-composite: exclude), identique à
+   .btn-outline-primary du thème Astro. Au survol, il se remplit du
+   dégradé et le texte devient blanc. */
+.btn-outline {
+  position: relative;
+  color: var(--text-heading);
+  background: transparent;
+  padding: 0.85rem 1.8rem;
+}
+
+.btn-outline::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px;                    /* Épaisseur de la bordure */
+  background: var(--gradient-primary);
+  border-radius: inherit;
+  /* Le masque ne conserve que l'anneau extérieur (la « bordure ») */
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.btn-outline:hover {
+  background: var(--gradient-primary);
+  color: #ffffff;
+}
+
+.btn-outline:hover::before {
+  opacity: 0;                      /* La bordure fusionne avec le fond */
+}
+
+/* Bouton texte : simple lien coloré avec flèche (utilisé dans les
+   cartes-listes : « View all components → ») */
+.btn-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0;
+  color: var(--color-primary);
+  font-weight: 500;
+  background: none;
+}
+
+.btn-text:hover {
+  color: var(--text-heading);
+}
+
+.btn-text svg {
+  width: 16px;
+  height: 16px;
+  transition: transform var(--transition-fast);
+}
+
+.btn-text:hover svg {
+  transform: translateX(4px);      /* La flèche avance au survol */
+}
+
+/* Petite flèche diagonale des cartes (rotate au survol de la carte) */
+.arrow-icon {
+  width: 18px;
+  height: 18px;
+  fill: var(--text-heading);
+  transition: transform var(--transition-base);
+}
+
+/* --------------------------------------------------------------------------
+   2. GRILLE DE CARTES + CARTES
+   --------------------------------------------------------------------------
+   Reproduit les composants Grid.astro et NewCard.astro :
+     - 1 colonne sur mobile, 2 sur tablette, N sur desktop (N = --columns)
+     - cartes avec bordure qui s'illumine d'un dégradé au survol
+   -------------------------------------------------------------------------- */
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr;      /* Mobile : une seule colonne */
+  gap: 1rem;
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);   /* Tablette : 2 colonnes max */
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .card-grid {
+    /* Desktop : on respecte --columns (2, 3 ou 4 selon la section) */
+    grid-template-columns: repeat(var(--columns, 2), 1fr);
+    gap: 1.7rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .card-grid {
+    grid-template-columns: repeat(min(var(--columns, 2), 4), 1fr);
+    gap: 1.8rem;
+    max-width: 1400px;
+    margin-inline: auto;
+  }
+}
+
+/* --- Carte « fonctionnalité » ----------------------------------------------- */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 3rem 2.5rem;            /* py-12 px-10 (grande carte) */
+  transition: transform var(--transition-slow), border-color var(--transition-slow);
+}
+
+/* Version compacte (size="sm" dans les pages de documentation) */
+.card-sm {
+  padding: 1.5rem;
+}
+
+/* Bordure dégradée au survol : même technique de masque que .btn-outline,
+   appliquée sur un pseudo-élément qui recouvre la carte (card::before du
+   thème original, avec opacity 0 → 1). */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  background: var(--gradient-primary);
+  border-radius: inherit;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity var(--transition-slow);
+  pointer-events: none;
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+/* Icône colorée en haut de la carte — la couleur vient de la variable
+   --icon-color posée en style inline dans le HTML (#FF8585, #7BE1A4…) */
+.card-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--icon-color, var(--color-primary)) 12%, transparent);
+  color: var(--icon-color, var(--color-primary));
+  flex-shrink: 0;
+}
+
+.card-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.card-title {
+  font-size: var(--text-h4);
+  margin-top: 2.5rem;              /* mt-11 */
+  margin-bottom: 1rem;
+}
+
+.card-sm .card-title {
+  margin-top: 1rem;
+  font-size: var(--text-h5);
+}
+
+.card-body {
+  font-size: 1rem;
+  color: var(--text-body);
+}
+
+.card-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* Flèche en bas de carte : pivote de -45° au survol (group-hover:-rotate-45) */
+.card-arrow {
+  margin-top: auto;
+  padding-top: 2.5rem;
+}
+
+.card:hover .arrow-icon {
+  transform: rotate(-45deg);
+}
+
+/* --------------------------------------------------------------------------
+   3. CARTES-LISTES (section « Feature topics »)
+   --------------------------------------------------------------------------
+   Reproduit ListCard.astro : en-tête (icône + titre + compteur) puis une
+   liste de liens séparés par de fines bordures.
+   -------------------------------------------------------------------------- */
+.list-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: 0.5rem;
+  transition: border-color var(--transition-base), transform var(--transition-base);
+}
+
+.list-card:hover {
+  border-color: var(--text-muted);
+  transform: translateY(-4px);
+}
+
+/* Une carte-liste avec image occupe 2 colonnes (list-card-wide) */
+@media (min-width: 769px) {
+  .list-card-wide {
+    grid-column: span 2;
+  }
+}
+
+.list-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.2rem;
+  margin-bottom: 1rem;
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--border-color) 35%, transparent);
+}
+
+.list-card-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.list-card-header-left img {
+  width: 32px;
+  height: 32px;
+}
+
+.list-card-header h3 {
+  font-size: 1.35rem;
+  font-weight: 500;
+}
+
+.list-card-count {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* Liste des articles : chaque <li> est séparé par une bordure, avec une
+   petite icône document (masque SVG) comme dans components.css d'origine */
+.list-body {
+  padding: 0 1rem;
+  flex: 1;
+}
+
+.list-body ul {
+  list-style: none;
+}
+
+.list-body li {
+  display: flex;
+  align-items: center;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.list-body li:last-child {
+  border-bottom: none;
+}
+
+.list-body li:hover {
+  color: var(--text-heading);
+}
+
+.list-body li::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+  background-color: var(--text-muted);
+  /* Icône « document » intégrée en data-URI (pas de dépendance externe) */
+  -webkit-mask: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 13V10.6569C20 9.83935 20 9.4306 19.8478 9.06306C19.6955 8.69552 19.4065 8.40649 18.8284 7.82843L14.0919 3.09188C13.593 2.593 13.3436 2.34355 13.0345 2.19575C12.9702 2.165 12.9044 2.13772 12.8372 2.11401C12.5141 2 12.1614 2 11.4558 2C8.21082 2 6.58831 2 5.48933 2.88607C5.26731 3.06508 5.06508 3.26731 4.88607 3.48933C4 4.58831 4 6.21082 4 9.45584V13M13 2.5V3C13 5.82843 13 7.24264 13.8787 8.12132C14.7574 9 16.1716 9 19 9H19.5' stroke='black' stroke-width='1.45'/%3E%3Cpath d='M20.5007 17.2196C20.4486 16.0292 19.674 16 18.6231 16C17.0044 16 16.736 16.406 16.736 18V20C16.736 21.594 17.0044 22 18.6231 22C19.674 22 21.9708 22 20.5007 20.7804M7.26568 19C7.26568 20.6569 6.00155 22 4.44215 22C3.7 22 3.50098 21.3376 3.50098 21V17C3.50098 16.2728 3.78333 16.0804 4.44215 16C6.00155 16 7.26568 17.3431 7.26568 19ZM12.0007 22C11.1134 22 10.394 21.7071 10.394 21.4142C10.1184 20.9428 10.1184 20 10.1184 18C10.1184 17.0572 10.394 16.2929 12.0007 16C12.8881 16 13.3318 16.5858 13.8831 17.0071C13.8831 17.0572 13.8831 18 13.8831 20C13.8831 20.9428 13.8831 22 12.0007 22Z' stroke='black' stroke-width='1.45'/%3E%3C/svg%3E")
+    no-repeat center / contain;
+  mask: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 13V10.6569C20 9.83935 20 9.4306 19.8478 9.06306C19.6955 8.69552 19.4065 8.40649 18.8284 7.82843L14.0919 3.09188C13.593 2.593 13.3436 2.34355 13.0345 2.19575C12.9702 2.165 12.9044 2.13772 12.8372 2.11401C12.5141 2 12.1614 2 11.4558 2C8.21082 2 6.58831 2 5.48933 2.88607C5.26731 3.06508 5.06508 3.26731 4.88607 3.48933C4 4.58831 4 6.21082 4 9.45584V13M13 2.5V3C13 5.82843 13 7.24264 13.8787 8.12132C14.7574 9 16.1716 9 19 9H19.5' stroke='black' stroke-width='1.45'/%3E%3Cpath d='M20.5007 17.2196C20.4486 16.0292 19.674 16 18.6231 16C17.0044 16 16.736 16.406 16.736 18V20C16.736 21.594 17.0044 22 18.6231 22C19.674 22 21.9708 22 20.5007 20.7804M7.26568 19C7.26568 20.6569 6.00155 22 4.44215 22C3.7 22 3.50098 21.3376 3.50098 21V17C3.50098 16.2728 3.78333 16.0804 4.44215 16C6.00155 16 7.26568 17.3431 7.26568 19ZM12.0007 22C11.1134 22 10.394 21.7071 10.394 21.4142C10.1184 20.9428 10.1184 20 10.1184 18C10.1184 17.0572 10.394 16.2929 12.0007 16C12.8881 16 13.3318 16.5858 13.8831 17.0071C13.8831 17.0572 13.8831 18 13.8831 20C13.8831 20.9428 13.8831 22 12.0007 22Z' stroke='black' stroke-width='1.45'/%3E%3C/svg%3E")
+    no-repeat center / contain;
+}
+
+.list-body li:hover::before {
+  background-color: var(--text-heading);
+}
+
+.list-body li a {
+  color: inherit;
+  text-decoration: none;
+  flex: 1;
+}
+
+/* Lien « View all … » en bas de carte-liste */
+.list-card-footer {
+  padding: 1.25rem 1rem 0.75rem;
+}
+
+/* Variante avec image (carte « Code Syntax ») */
+.list-card-media img {
+  width: 100%;
+  border-radius: var(--radius-md);
+  margin: 0.5rem 0 1rem;
+}
+
+/* --------------------------------------------------------------------------
+   4. ONGLETS « DÉMARRER EN 3 ÉTAPES » (HeroTabs.astro)
+   -------------------------------------------------------------------------- */
+.steps-tabs {
+  max-width: 1100px;
+  margin-inline: auto;
+}
+
+/* Barre d'onglets : colonne sur mobile, rangée sur desktop, avec une
+   bordure supérieure comme dans le composant d'origine */
+.steps-nav {
+  display: flex;
+  flex-direction: column;
+  border-top: 2px solid var(--border-color);
+}
+
+@media (min-width: 768px) {
+  .steps-nav {
+    flex-direction: row;
+    align-items: stretch;
+  }
+}
+
+.step-tab {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  width: 100%;
+  padding: 1.5rem 1rem;
+  text-align: left;
+  color: var(--text-body);
+  opacity: 0.6;
+  position: relative;
+  transition: opacity var(--transition-base), background-color var(--transition-base),
+    transform var(--transition-base);
+}
+
+.step-tab:hover {
+  background: var(--bg-hover);
+  opacity: 0.85;
+}
+
+/* Onglet actif : opacité pleine + barre de dégradé en haut */
+.step-tab[aria-selected="true"] {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.step-tab[aria-selected="true"]::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-primary);
+}
+
+/* Pastille numérotée (1, 2, 3) */
+.step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--bg-body);
+  border: 1px solid var(--border-color);
+  color: var(--text-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background var(--transition-base), color var(--transition-base),
+    border-color var(--transition-base);
+}
+
+.step-tab[aria-selected="true"] .step-number {
+  background: var(--gradient-primary);
+  border-color: transparent;
+  color: #fff;
+}
+
+.step-title {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-heading);
+  margin-bottom: 0.35rem;
+}
+
+.step-subtitle {
+  display: block;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  opacity: 0.9;
+}
+
+/* Panneau de contenu : image de démonstration dans un cadre arrondi */
+.steps-content {
+  margin-top: 3.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-2xl);
+  padding: 0.6rem;
+  overflow: hidden;
+}
+
+.step-panel {
+  display: none;                   /* Un seul panneau visible à la fois */
+  padding: 2rem;
+}
+
+.step-panel.active {
+  display: block;
+  animation: fade-in 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.step-panel img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: var(--radius-lg);
+}
+
+@media (max-width: 767px) {
+  .step-tab { padding: 1rem; }
+  .step-title { font-size: 1.05rem; }
+  .step-subtitle { font-size: 0.8rem; }
+  .step-panel { padding: 1rem; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* --------------------------------------------------------------------------
+   5. DÉMO DU THÈME SOMBRE / CLAIR (ThemeDemo.astro)
+   --------------------------------------------------------------------------
+   Gros interrupteur flottant au-dessus de deux captures d'écran.
+   Cliquer dessus inverse l'image mise en avant (sans changer le thème
+   réel du site — c'est une démonstration).
+   -------------------------------------------------------------------------- */
+.theme-demo {
+  position: relative;
+  margin-top: 7rem;                /* Espace pour l'interrupteur flottant */
+}
+
+.theme-demo-switch-wrap {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 290px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: var(--shadow-lg);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border-radius: 600px;
+}
+
+.theme-demo-switch {
+  position: relative;
+  width: 204px;
+  height: 120px;
+  padding: 12px;
+  border-radius: 200px;
+  background: color-mix(in srgb, var(--text-heading) 20%, transparent);
+  cursor: pointer;
+}
+
+.theme-demo-knob {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 96px;
+  height: 96px;
+  border-radius: 48px;
+  background: var(--text-heading);
+  transition: transform var(--transition-base);
+}
+
+/* Position « actif » : le bouton glisse vers la droite */
+.theme-demo-switch.active .theme-demo-knob {
+  transform: translateX(84px);
+}
+
+.theme-demo-images {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .theme-demo-images {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.theme-demo-images img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  transition: opacity var(--transition-base);
+}
+
+@media (min-width: 640px) {
+  .theme-demo-images img {
+    height: 500px;
+  }
+}
+
+/* L'image « non mise en avant » passe à 20 % d'opacité */
+.theme-demo-images img.dimmed {
+  opacity: 0.2;
+}
+
+/* Version réduite sur mobile */
+@media (max-width: 740px) {
+  .theme-demo { margin-top: 4rem; }
+  .theme-demo-switch-wrap { width: 190px; height: 120px; top: -60px; }
+  .theme-demo-switch { width: 140px; height: 80px; padding: 10px; }
+  .theme-demo-knob { width: 60px; height: 60px; border-radius: 40px; top: 10px; left: 10px; }
+  .theme-demo-switch.active .theme-demo-knob { transform: translateX(60px); }
+}
+
+/* --------------------------------------------------------------------------
+   6. ACCORDÉON FAQ (AccordionContainer.astro + Accordion.astro)
+   --------------------------------------------------------------------------
+   Colonne de gauche : 3 onglets de catégories (icônes en dégradé).
+   Colonne de droite : les questions/réponses filtrées par catégorie.
+   -------------------------------------------------------------------------- */
+.faq {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  max-width: 1240px;
+  margin-inline: auto;
+  text-align: left;
+}
+
+@media (min-width: 900px) {
+  .faq {
+    grid-template-columns: 1fr 2fr;   /* Même proportion que l'original */
+    gap: 4rem;
+  }
+}
+
+.faq-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Un onglet de catégorie (icône + titre + sous-titre) */
+.faq-tab {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  text-align: left;
+  opacity: 0.65;
+  transition: opacity var(--transition-base), border-color var(--transition-base),
+    transform var(--transition-base);
+}
+
+.faq-tab:hover {
+  opacity: 0.9;
+}
+
+.faq-tab.active {
+  opacity: 1;
+  border-color: var(--color-primary);
+  transform: translateX(4px);
+}
+
+.faq-tab-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--color-primary) 12%, transparent);
+}
+
+.faq-tab-icon svg {
+  width: 26px;
+  height: 26px;
+  stroke: url(#faq-gradient);   /* Non supporté partout → couleur de secours : */
+  stroke: var(--color-primary);
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.faq-tab h3 {
+  font-size: 1.15rem;
+  margin-bottom: 0.25rem;
+}
+
+.faq-tab p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* --- Liste des accordéons ---------------------------------------------------- */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.accordion {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 2rem;
+  background: var(--bg-card);
+  transition: border-color var(--transition-base);
+}
+
+/* Seuls les accordéons de la catégorie active sont visibles
+   (filtrage par attribut data-tab, piloté par js/home.js) */
+.accordion[data-hidden="true"] {
+  display: none;
+}
+
+.accordion.open {
+  border-color: var(--color-primary);
+}
+
+.accordion-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.accordion-header h4 {
+  font-size: 1.15rem;
+  font-weight: 500;
+}
+
+/* Icône +/− : deux barres SVG, la verticale disparaît quand c'est ouvert */
+.accordion-icon {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--color-primary);
+}
+
+.accordion-icon svg {
+  width: 15px;
+  height: 15px;
+}
+
+.accordion-icon .vertical-line {
+  transition: transform var(--transition-slow), opacity var(--transition-slow);
+  transform-origin: center;
+}
+
+.accordion.open .accordion-icon .vertical-line {
+  transform: rotate(90deg);
+  opacity: 0;                      /* Le « + » devient « − » */
+}
+
+/* Corps repliable : hauteur animée de 0 → auto (via grid-template-rows,
+   astuce moderne pour animer une hauteur inconnue) */
+.accordion-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--transition-slow);
+}
+
+.accordion.open .accordion-body {
+  grid-template-rows: 1fr;
+}
+
+.accordion-body > div {
+  overflow: hidden;
+}
+
+.accordion-body p {
+  padding-top: 1rem;
+  margin-bottom: 0;
+  color: var(--text-body);
+}
+
+/* --------------------------------------------------------------------------
+   7. MODALE DE RECHERCHE
+   --------------------------------------------------------------------------
+   Fenêtre de recherche plein écran (ouverte par js/search.js via le bouton
+   loupe, la barre du héros ou le raccourci Ctrl+K).
+   -------------------------------------------------------------------------- */
+.search-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 12vh 1rem 1rem;
+}
+
+.search-modal[hidden] {
+  display: none;
+}
+
+.search-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--overlay);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  animation: fade-in 0.2s ease;
+}
+
+.search-modal-panel {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  animation: modal-in 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modal-in {
+  from { opacity: 0; transform: translateY(-16px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.search-form svg {
+  width: 20px;
+  height: 20px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.search-form input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text-heading);
+  font-size: 1.05rem;
+}
+
+.search-form input::placeholder {
+  color: var(--text-muted);
+}
+
+.search-form kbd {
+  font-family: var(--font-primary);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-body);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.2rem 0.5rem;
+}
+
+/* Résultats de recherche */
+.search-results {
+  max-height: 50vh;
+  overflow-y: auto;
+  padding: 0.5rem;
+}
+
+.search-result {
+  display: block;
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius-md);
+  color: var(--text-body);
+  transition: background-color var(--transition-fast);
+}
+
+.search-result:hover,
+.search-result.selected {
+  background: var(--bg-hover);
+}
+
+.search-result-title {
+  display: block;
+  color: var(--text-heading);
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+}
+
+.search-result-path {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.search-result-snippet {
+  display: block;
+  font-size: 0.85rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search-empty {
+  padding: 2rem 1rem;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.search-hint {
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid var(--border-color);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.search-hint kbd {
+  font-family: var(--font-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 0.05rem 0.4rem;
+  margin-right: 0.3rem;
+}
+
+/* --------------------------------------------------------------------------
+   8. BADGES / ÉTIQUETTES (utilisés dans la documentation)
+   -------------------------------------------------------------------------- */
+.tag {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.6;
+  vertical-align: middle;
+}
+
+.tag-success {
+  background: rgba(123, 225, 164, 0.15);
+  color: #7be1a4;
+}
+
+.tag-danger {
+  background: rgba(255, 133, 133, 0.15);
+  color: #ff8585;
+}
+
+.tag-default {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}

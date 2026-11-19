@@ -1,0 +1,323 @@
+/* ==========================================================================
+   DOCKIT STATIQUE — base.css
+   --------------------------------------------------------------------------
+   Ce fichier contient les FONDATIONS du site :
+     1. Les variables CSS (couleurs du thème sombre / clair, polices, tailles)
+     2. La réinitialisation (reset) des styles par défaut du navigateur
+     3. La typographie générale (titres, paragraphes, liens, listes…)
+     4. Quelques utilitaires réutilisables (container, light-text, etc.)
+
+   Ces valeurs proviennent du fichier `src/config/theme.json` du thème
+   Astro d'origine (DocKit) :
+     - Couleur primaire   : #D76D77
+     - Mode sombre (défaut): fond #0d0d0d, cartes #151515, texte #999999
+     - Mode clair          : fond #ffffff, cartes #f7f7f7, texte #000000
+     - Police              : Inter (400 / 500 / 600), base 16px, échelle 1.15
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. VARIABLES DU THÈME SOMBRE (thème par défaut)
+   --------------------------------------------------------------------------
+   Toutes les couleurs du site passent par ces variables. Pour personnaliser
+   le thème, il suffit de modifier les valeurs ci-dessous : tout le site se
+   mettra à jour automatiquement.
+   -------------------------------------------------------------------------- */
+:root {
+  /* --- Couleur de marque ------------------------------------------------ */
+  --color-primary: #d76d77;            /* Rose primaire du thème DocKit     */
+  --color-primary-soft: rgba(215, 109, 119, 0.15); /* Primaire transparent */
+
+  /* Dégradé signature (utilisé pour les boutons, bordures au survol, etc.)
+     Reproduit exactement `--color-primary-gradient` du thème Astro.       */
+  --gradient-primary: linear-gradient(
+    35.65deg,
+    #3a1c71 -10.94%,
+    #d76d77 61.04%,
+    #ffca7b 133.01%
+  );
+
+  /* --- Fonds (mode sombre) ---------------------------------------------- */
+  --bg-body: #0d0d0d;                  /* Fond général de la page           */
+  --bg-card: #151515;                  /* Fond des cartes et blocs          */
+  --bg-elevated: #1b1b1b;              /* Éléments flottants (menus, modale)*/
+  --bg-hover: #1e1e1e;                 /* Fond au survol (gray-7)           */
+
+  /* --- Textes (mode sombre) --------------------------------------------- */
+  --text-body: #999999;                /* Texte courant                     */
+  --text-heading: #f6f6f6;             /* Titres (équivalent --sl-color-white) */
+  --text-muted: rgba(153, 153, 153, 0.5); /* Texte atténué (classe .light-text) */
+
+  /* --- Bordures et séparateurs (mode sombre) ----------------------------- */
+  --border-color: #373737;             /* gray-6 : bordures fines des cartes */
+  --border-soft: #2a2a2a;              /* Bordure encore plus discrète      */
+
+  /* --- Divers ------------------------------------------------------------- */
+  --shadow-lg: 0 48px 56px rgba(0, 0, 0, 0.32); /* Ombre portée importante  */
+  --overlay: rgba(0, 0, 0, 0.6);       /* Voile sombre des modales          */
+
+  /* --- Polices (theme.json : Inter, base 16px, échelle 1.15) -------------
+     Les tailles h1 → h6 suivent une échelle modulaire : chaque niveau
+     multiplie le précédent par 1.15 (calculs arrondis).                    */
+  --font-primary: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+
+  --text-base: 16px;
+  --text-h1: 2.313rem;   /* 1.15^6 */
+  --text-h1-sm: 2.082rem;
+  --text-h2: 2.011rem;   /* 1.15^5 */
+  --text-h2-sm: 1.81rem;
+  --text-h3: 1.749rem;   /* 1.15^4 */
+  --text-h3-sm: 1.574rem;
+  --text-h4: 1.521rem;   /* 1.15^3 */
+  --text-h5: 1.323rem;   /* 1.15^2 */
+  --text-h6: 1.15rem;    /* 1.15^1 */
+
+  /* --- Mise en page -------------------------------------------------------- */
+  --container-max: 1740px;   /* Largeur maximale du conteneur (components.css) */
+  --content-max: 72rem;      /* Largeur confortable pour un texte de doc       */
+  --sidebar-width: 300px;    /* Largeur de la barre latérale de documentation  */
+  --toc-width: 240px;        /* Largeur de la table des matières (colonne droite) */
+  --header-height: 84px;     /* Hauteur de l'en-tête fixe                      */
+
+  /* --- Transitions ---------------------------------------------------------- */
+  --transition-fast: 0.2s ease;
+  --transition-base: 0.3s ease;
+  --transition-slow: 0.5s ease;
+
+  /* --- Rayons de bordure ----------------------------------------------------- */
+  --radius-sm: 0.5rem;   /* 8px  */
+  --radius-md: 0.75rem;  /* 12px */
+  --radius-lg: 1rem;     /* 16px */
+  --radius-xl: 1.3rem;   /* ~21px */
+  --radius-2xl: 1.5rem;  /* 24px */
+}
+
+/* --------------------------------------------------------------------------
+   1bis. VARIABLES DU THÈME CLAIR
+   --------------------------------------------------------------------------
+   Le thème clair s'active lorsque l'attribut `data-theme="light"` est posé
+   sur la balise <html> (voir js/main.js). Seules les couleurs changent :
+   toutes les règles du site utilisent les variables définies plus haut.
+   Valeurs issues de `theme.json → colors.lightmode`.
+   -------------------------------------------------------------------------- */
+[data-theme="light"] {
+  --bg-body: #ffffff;                  /* Fond général blanc                */
+  --bg-card: #f7f7f7;                  /* Cartes gris très clair            */
+  --bg-elevated: #ffffff;              /* Éléments flottants blancs         */
+  --bg-hover: #f6f6f6;                 /* Survol                            */
+
+  --text-body: #333333;                /* Texte courant (adouci par rapport
+                                          au #000 brut pour le confort)     */
+  --text-heading: #181818;             /* Titres presque noirs              */
+  --text-muted: rgba(0, 0, 0, 0.5);    /* Texte atténué                     */
+
+  --border-color: #eaeaea;             /* Bordures claires (gray-6)         */
+  --border-soft: #f0f0f0;
+
+  --shadow-lg: 0 48px 56px rgba(0, 0, 0, 0.12);
+  --overlay: rgba(255, 255, 255, 0.6);
+}
+
+/* --------------------------------------------------------------------------
+   2. RESET — remise à zéro des styles par défaut du navigateur
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;  /* La largeur inclut padding et bordure */
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: var(--text-base);
+  scroll-behavior: smooth;        /* Défilement doux pour les ancres (#…) */
+  -webkit-text-size-adjust: 100%; /* Évite le zoom auto sur mobile       */
+}
+
+body {
+  font-family: var(--font-primary);
+  background-color: var(--bg-body);
+  color: var(--text-body);
+  line-height: 1.7;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;   /* Rendu plus net sur macOS/iOS  */
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color var(--transition-base),
+    color var(--transition-base);        /* Transition douce quand on
+                                            change de thème               */
+  overflow-x: hidden;                    /* Pas de débordement horizontal */
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;   /* Les images ne débordent jamais de leur conteneur */
+  height: auto;
+}
+
+button {
+  font: inherit;     /* Les boutons héritent de la police du site */
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+ul[class],
+ol[class] {
+  list-style: none;  /* Pas de puces par défaut sur les listes stylées */
+}
+
+/* --------------------------------------------------------------------------
+   3. TYPOGRAPHIE GÉNÉRALE
+   -------------------------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-heading);
+  font-weight: 700;
+  line-height: 1.25;
+  text-wrap: balance; /* Équilibre les lignes d'un titre court */
+}
+
+h1 { font-size: var(--text-h1-sm); }
+h2 { font-size: var(--text-h2-sm); }
+h3 { font-size: var(--text-h3-sm); }
+h4 { font-size: var(--text-h4); }
+h5 { font-size: var(--text-h5); }
+h6 { font-size: var(--text-h6); }
+
+/* Sur grand écran, les titres retrouvent leur taille complète
+   (équivalent des classes md:text-h1, md:text-h2… du thème original) */
+@media (min-width: 768px) {
+  h1 { font-size: var(--text-h1); }
+  h2 { font-size: var(--text-h2); }
+  h3 { font-size: var(--text-h3); }
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--text-heading);
+}
+
+strong, b {
+  font-weight: 600;
+  color: var(--text-heading);
+}
+
+small {
+  font-size: 0.85em;
+}
+
+/* Sélection de texte aux couleurs du thème */
+::selection {
+  background: var(--color-primary);
+  color: #ffffff;
+}
+
+/* Barre de défilement personnalisée (navigateurs compatibles) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-body);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   4. UTILITAIRES RÉUTILISABLES
+   -------------------------------------------------------------------------- */
+
+/* Conteneur centré qui limite la largeur du contenu (max 1740px) */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+/* Texte atténué utilisé dans les titres en deux tons,
+   ex. « Powerful features [for documentations] »
+   (équivalent de la classe .light-text du thème original) */
+.light-text {
+  display: block;
+  color: var(--text-muted);
+}
+
+/* Masquage accessible : visible uniquement par les lecteurs d'écran */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Centre le texte (titres de sections, héros…) */
+.text-center {
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   5. ANIMATION D'APPARITION AU DÉFILEMENT (scroll reveal)
+   --------------------------------------------------------------------------
+   Les éléments portant la classe `.reveal` apparaissent en fondu + léger
+   glissement vers le haut quand ils entrent dans le viewport.
+   L'activation se fait dans js/main.js via un IntersectionObserver.
+   -------------------------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Respect des préférences utilisateur : si le système demande moins
+   d'animations, on désactive les transitions et l'effet d'apparition. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

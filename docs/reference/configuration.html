@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <!-- Page générée depuis src/content/docs/reference/configuration.mdx -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configuration Reference | DocKit</title>
+  <meta name="description" content="An overview of all the configuration options Starlight supports.">
+  <link rel="icon" type="image/svg+xml" href="../../assets/images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/layout.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/docs.css">
+  <script>
+    /* Anti-scintillement : applique le thème mémorisé avant le premier rendu */
+    (function () {
+      try {
+        var theme = localStorage.getItem("dockit-theme");
+        if (!theme) theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (e) { document.documentElement.setAttribute("data-theme", "dark"); }
+    })();
+  </script>
+</head>
+
+<body class="page-docs">
+
+  <!-- ==================== EN-TÊTE ==================== -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../../index.html" aria-label="DocKit">
+        <img class="logo-dark" src="../../assets/images/logo-dark.svg" alt="DocKit" width="127" height="32">
+        <img class="logo-light" src="../../assets/images/logo-light.svg" alt="DocKit" width="127" height="32">
+      </a>
+
+      <nav class="main-nav" id="main-nav" aria-label="Documentation">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="../../index.html">Home</a></li>
+          <li><a class="nav-link" href="../getting-started/introduction/overview.html">Documentation</a></li>
+          <li class="has-dropdown">
+            <button class="nav-link" aria-haspopup="true" aria-expanded="false">
+              Reference
+              <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="configuration.html">Configuration</a></li>
+              <li><a href="plugin.html">Plugins Reference</a></li>
+            </ul>
+          </li>
+          <li class="nav-cta-mobile"><a class="btn btn-primary" href="../getting-started/introduction/overview.html">Get Started</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn" data-search-open aria-label="Search documentation">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <button class="icon-btn theme-toggle" id="theme-toggle" aria-label="Toggle dark / light theme">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        </button>
+        <div class="lang-switch" aria-label="Langue">
+          <a href="#" data-lang-link="en">EN</a>
+          <a href="#" data-lang-link="fr">FR</a>
+        </div>
+        <a class="btn btn-outline header-cta" href="../getting-started/introduction/overview.html">Get Started</a>
+        <button class="icon-btn menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="nav-backdrop" id="nav-backdrop"></div>
+
+  <!-- ==================== CONTENU ==================== -->
+  <main>
+    <div class="container docs-layout">
+
+      <!-- Première colonne : sidebar de navigation (générée à partir
+           de la structure sidebar.json du thème Astro) -->
+      <aside class="docs-sidebar" id="docs-sidebar">
+        <nav aria-label="Documentation sidebar"><div class="sidebar-group collapsed"><button class="sidebar-group-title" aria-expanded="false">Getting Started<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul class="sidebar-links"><li class="sidebar-subgroup"><button class="sidebar-sub-title" aria-expanded="true">Introduction<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul><li><a class="sidebar-link" href="../getting-started/introduction/overview.html">Overview</a></li><li><a class="sidebar-link" href="../getting-started/introduction/quickstart.html">Quickstart</a></li></ul></li><li class="sidebar-subgroup"><button class="sidebar-sub-title" aria-expanded="true">Global Settings<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul><li><a class="sidebar-link" href="../getting-started/global-settings/configuration.html">Global Configuration</a></li></ul></li><li><a class="sidebar-link" href="../getting-started/navigation.html">Introduction to DocKit</a></li></ul></div><div class="sidebar-group collapsed"><button class="sidebar-group-title" aria-expanded="false">Content<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul class="sidebar-links"><li class="sidebar-subgroup"><button class="sidebar-sub-title" aria-expanded="true">Components and Block<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul><li><a class="sidebar-link" href="../contents/components/using-components.html">Using Components</a></li><li><a class="sidebar-link" href="../contents/components/list-card.html">ListCard Component</a></li><li><a class="sidebar-link" href="../contents/components/grid.html">Grid Component</a></li><li><a class="sidebar-link" href="../contents/components/accordion.html">Accordion Component</a></li><li class="sidebar-subgroup"><button class="sidebar-sub-title" aria-expanded="true">Child Components<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul><li><a class="sidebar-link" href="../contents/components/child-components/new-card.html">NewCard Component</a></li><li class="sidebar-subgroup"><button class="sidebar-sub-title" aria-expanded="true">More Child<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul><li><a class="sidebar-link" href="../contents/components/child-components/more-child/button.html">Button Component</a></li></ul></li></ul></li></ul></li><li class="sidebar-subgroup"><button class="sidebar-sub-title" aria-expanded="true">Editing Content<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul><li><a class="sidebar-link" href="../contents/editing/add-new-doc.html">Adding Document</a></li></ul></li></ul></div><div class="sidebar-group"><button class="sidebar-group-title" aria-expanded="true">Reference<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul class="sidebar-links"><li><a class="sidebar-link active" href="configuration.html">Configuration</a></li><li><a class="sidebar-link" href="plugin.html">Plugins Reference</a></li></ul></div><div class="sidebar-group collapsed"><button class="sidebar-group-title" aria-expanded="false">Configurations<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul class="sidebar-links"><li><a class="sidebar-link" href="../configurations/custom-css-js.html">Custom CSS & JavaScript</a></li><li><a class="sidebar-link" href="../configurations/github.html">GitHub Integration</a></li><li><a class="sidebar-link" href="../configurations/custom-domain.html">Custom Domain Setup</a></li></ul></div></nav>
+      </aside>
+
+      <!-- Deuxième colonne : l'article lui-même -->
+      <div class="docs-main">
+        <article class="docs-content prose">
+          <h1>Configuration Reference</h1>
+          <p class="docs-description">An overview of all the configuration options Starlight supports.</p>
+<h2 id="configure-the-starlight-integration">Configure the <code>starlight</code> integration</h2>
+<p>Starlight is an integration built on top the <a href="https://astro.build">Astro</a> web framework. You can configure your project inside the <code>astro.config.mjs</code> configuration file:</p>
+<div class="codehilite"><pre><span></span><span class="c1">// astro.config.mjs</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">defineConfig</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"astro/config"</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="nx">starlight</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@astrojs/starlight"</span><span class="p">;</span>
+
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">defineConfig</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">integrations</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="nx">starlight</span><span class="p">({</span>
+<span class="w">      </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s2">"My delightful docs site"</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}),</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="p">});</span>
+</pre></div>
+
+<p>You can pass the following options to the <code>starlight</code> integration.</p>
+<h3 id="title-required"><code>title</code> (required)</h3>
+<p><strong>type:</strong> <code>string | Record&lt;string, string&gt;</code></p>
+<p>Set the title for your website. Will be used in metadata and in the browser tab title.</p>
+<p>The value can be a string, or for multilingual sites, an object with values for each different locale.
+When using the object form, the keys must be BCP-47 tags (e.g. <code>en</code>, <code>ar</code>, or <code>zh-CN</code>):</p>
+<div class="codehilite"><pre><span></span><span class="nx">starlight</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">en</span><span class="o">:</span><span class="w"> </span><span class="s2">"My delightful docs site"</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">de</span><span class="o">:</span><span class="w"> </span><span class="s2">"Meine bezaubernde Dokumentationsseite"</span><span class="p">,</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="p">});</span>
+</pre></div>
+
+<h3 id="description"><code>description</code></h3>
+<p><strong>type:</strong> <code>string</code></p>
+<p>Set the description for your website. Used in metadata shared with search engines in the <code>&lt;meta name="description"&gt;</code> tag if <code>description</code> is not set in a page’s frontmatter.</p>
+<h3 id="logo"><code>logo</code></h3>
+<p><strong>type:</strong> <a href="#logoconfig"><code>LogoConfig</code></a></p>
+<p>Set a logo image to show in the navigation bar alongside or instead of the site title. You can either set a single <code>src</code> property or set separate image sources for <code>light</code> and <code>dark</code>.</p>
+<div class="codehilite"><pre><span></span><span class="nx">starlight</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">logo</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">src</span><span class="o">:</span><span class="w"> </span><span class="s2">"./src/assets/my-logo.svg"</span><span class="p">,</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="p">});</span>
+</pre></div>
+
+<h4 id="logoconfig"><code>LogoConfig</code></h4>
+<div class="codehilite"><pre><span></span><span class="kr">type</span><span class="w"> </span><span class="nx">LogoConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">alt?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w"> </span><span class="nx">replacesTitle?</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">src</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">light</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w"> </span><span class="nx">dark</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">}</span>
+<span class="p">);</span>
+</pre></div>
+
+<h3 id="tableofcontents"><code>tableOfContents</code></h3>
+<p><strong>type:</strong> <code>false | { minHeadingLevel?: number; maxHeadingLevel?: number }</code><br />
+<strong>default:</strong> <code>{ minHeadingLevel: 2, maxHeadingLevel: 3 }</code></p>
+<p>Configure the table of contents shown on the right of each page. By default, <code>&lt;h2&gt;</code> and <code>&lt;h3&gt;</code> headings will be included in this table of contents.</p>
+<h3 id="editlink"><code>editLink</code></h3>
+<p><strong>type:</strong> <code>{ baseUrl: string }</code></p>
+<p>Enable “Edit this page” links by setting the base URL these should use. The final link will be <code>editLink.baseUrl</code> + the current page path. For example, to enable editing pages in the <code>withastro/starlight</code> repo on GitHub:</p>
+<div class="codehilite"><pre><span></span><span class="nx">starlight</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">editLink</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">baseUrl</span><span class="o">:</span><span class="w"> </span><span class="s2">"https://github.com/withastro/starlight/edit/main/"</span><span class="p">,</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="p">});</span>
+</pre></div>
+
+<p>With this config, a <code>/introduction</code> page would have an edit link pointing to <code>https://github.com/withastro/starlight/edit/main/src/content/docs/introduction.md</code>.</p>
+<h3 id="sidebar"><code>sidebar</code></h3>
+<p><strong>type:</strong> <a href="#sidebaritem"><code>SidebarItem[]</code></a></p>
+<p>Configure your site’s sidebar navigation items.</p>
+<p>A sidebar is an array of links and groups of links.
+With the exception of items using <code>slug</code>, each item must have a <code>label</code> and one of the following properties:</p>
+<ul>
+<li>
+<p><code>link</code> — a single link to a specific URL, e.g. <code>'/home'</code> or <code>'https://example.com'</code>.</p>
+</li>
+<li>
+<p><code>slug</code> — a reference to an internal page, e.g. <code>'guides/getting-started'</code>.</p>
+</li>
+<li>
+<p><code>items</code> — an array containing more sidebar links and subgroups.</p>
+</li>
+<li>
+<p><code>autogenerate</code> — an object specifying a directory of your docs to automatically generate a group of links from.</p>
+</li>
+</ul>
+<p>Internal links can also be specified as a string instead of an object with a <code>slug</code> property.</p>
+<div class="codehilite"><pre><span></span><span class="nx">starlight</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">sidebar</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="c1">// A single link item labelled “Home”.</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s2">"Home"</span><span class="p">,</span><span class="w"> </span><span class="nx">link</span><span class="o">:</span><span class="w"> </span><span class="s2">"/"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="c1">// A group labelled “Start Here” containing four links.</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s2">"Start Here"</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">items</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="c1">// Using `slug` for internal links.</span>
+<span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nx">slug</span><span class="o">:</span><span class="w"> </span><span class="s2">"intro"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nx">slug</span><span class="o">:</span><span class="w"> </span><span class="s2">"installation"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">        </span><span class="c1">// Or using the shorthand for internal links.</span>
+<span class="w">        </span><span class="s2">"tutorial"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"next-steps"</span><span class="p">,</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="c1">// A group linking to all pages in the reference directory.</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s2">"Reference"</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">autogenerate</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">directory</span><span class="o">:</span><span class="w"> </span><span class="s2">"reference"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="p">});</span>
+</pre></div>
+
+<h4 id="sorting">Sorting</h4>
+<p>Autogenerated sidebar groups are sorted by filename alphabetically.
+For example, a page generated from <code>astro.md</code> would appear above the page for <code>starlight.md</code>.</p>
+<h4 id="collapsing-groups">Collapsing groups</h4>
+<p>Groups of links are expanded by default. You can change this behavior by setting a group’s <code>collapsed</code> property to <code>true</code>.</p>
+<p>Autogenerated subgroups respect the <code>collapsed</code> property of their parent group by default. Set the <code>autogenerate.collapsed</code> property to override this.</p>
+<div class="codehilite"><pre><span></span>sidebar: [
+  // A collapsed group of links.
+  {
+    label: 'Collapsed Links',
+    collapsed: true,
+    items: ['intro', 'next-steps'],
+  },
+  // An expanded group containing collapsed autogenerated subgroups.
+  {
+    label: 'Reference',
+    autogenerate: {
+      directory: 'reference',
+      collapsed: true,
+    },
+  },
+],
+</pre></div>
+
+<h4 id="translating-labels">Translating labels</h4>
+<p>If your site is multilingual, each item’s <code>label</code> is considered to be in the default locale. You can set a <code>translations</code> property to provide labels for your other supported languages:</p>
+<div class="codehilite"><pre><span></span>sidebar: [
+  // An example sidebar with labels translated to Brazilian Portuguese.
+  {
+    label: 'Start Here',
+    translations: { 'pt-BR': 'Comece Aqui' },
+    items: [
+      {
+        label: 'Getting Started',
+        translations: { 'pt-BR': 'Introdução' },
+        link: '/getting-started',
+      },
+      {
+        label: 'Project Structure',
+        translations: { 'pt-BR': 'Estrutura de Projetos' },
+        link: '/structure',
+      },
+    ],
+  },
+],
+</pre></div>
+
+<h4 id="sidebaritem"><code>SidebarItem</code></h4>
+<div class="codehilite"><pre><span></span><span class="kr">type</span><span class="w"> </span><span class="nx">SidebarItem</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="kt">string</span>
+<span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="p">({</span>
+<span class="w">      </span><span class="nx">translations?</span><span class="o">:</span><span class="w"> </span><span class="kt">Record</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">      </span><span class="nx">badge?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nx">BadgeConfig</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span>
+<span class="w">      </span><span class="o">|</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="c1">// Link</span>
+<span class="w">          </span><span class="nx">link</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">          </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">          </span><span class="nx">attrs?</span><span class="o">:</span><span class="w"> </span><span class="kt">Record</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kt">number</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">undefined</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="o">|</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="c1">// Internal link</span>
+<span class="w">          </span><span class="nx">slug</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">          </span><span class="nx">label?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">          </span><span class="nx">attrs?</span><span class="o">:</span><span class="w"> </span><span class="kt">Record</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kt">number</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">undefined</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="o">|</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="c1">// Group of links</span>
+<span class="w">          </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">          </span><span class="nx">items</span><span class="o">:</span><span class="w"> </span><span class="kt">SidebarItem</span><span class="p">[];</span>
+<span class="w">          </span><span class="nx">collapsed?</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="o">|</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="c1">// Autogenerated link group</span>
+<span class="w">          </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">          </span><span class="nx">autogenerate</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">directory</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">            </span><span class="nx">collapsed?</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span>
+<span class="w">            </span><span class="nx">attrs?</span><span class="o">:</span><span class="w"> </span><span class="kt">Record</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kt">number</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">undefined</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">          </span><span class="p">};</span>
+<span class="w">          </span><span class="nx">collapsed?</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">));</span>
+</pre></div>
+
+<h4 id="badgeconfig"><code>BadgeConfig</code></h4>
+<div class="codehilite"><pre><span></span><span class="kd">interface</span><span class="w"> </span><span class="nx">BadgeConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">variant</span><span class="o">?:</span><span class="w"> </span><span class="s2">"note"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"tip"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"caution"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"danger"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"success"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"default"</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">class?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3 id="locales"><code>locales</code></h3>
+<p><strong>type:</strong> <code>{ [dir: string]: <a href="#localeconfig">LocaleConfig</a> }</code></p>
+<p><a href="#">Configure internationalization (i18n)</a> for your site by setting which <code>locales</code> are supported.</p>
+<p>Each entry should use the directory where that language’s files are saved as the key.</p>
+<div class="codehilite"><pre><span></span><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">defineConfig</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"astro/config"</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="nx">starlight</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@astrojs/starlight"</span><span class="p">;</span>
+
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">defineConfig</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">integrations</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="nx">starlight</span><span class="p">({</span>
+<span class="w">      </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s2">"My Site"</span><span class="p">,</span>
+<span class="w">      </span><span class="c1">// Set English as the default language for this site.</span>
+<span class="w">      </span><span class="nx">defaultLocale</span><span class="o">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">locales</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// English docs in `src/content/docs/en/`</span>
+<span class="w">        </span><span class="nx">en</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s2">"English"</span><span class="p">,</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="c1">// Simplified Chinese docs in `src/content/docs/zh-cn/`</span>
+<span class="w">        </span><span class="s2">"zh-cn"</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s2">"简体中文"</span><span class="p">,</span>
+<span class="w">          </span><span class="nx">lang</span><span class="o">:</span><span class="w"> </span><span class="s2">"zh-CN"</span><span class="p">,</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="c1">// Arabic docs in `src/content/docs/ar/`</span>
+<span class="w">        </span><span class="nx">ar</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s2">"العربية"</span><span class="p">,</span>
+<span class="w">          </span><span class="nx">dir</span><span class="o">:</span><span class="w"> </span><span class="s2">"rtl"</span><span class="p">,</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">    </span><span class="p">}),</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="p">});</span>
+</pre></div>
+
+<h4 id="localeconfig"><code>LocaleConfig</code></h4>
+<div class="codehilite"><pre><span></span><span class="kd">interface</span><span class="w"> </span><span class="nx">LocaleConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">lang?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">dir</span><span class="o">?:</span><span class="w"> </span><span class="s2">"ltr"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"rtl"</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>You can set the following options for each locale:</p>
+<h5 id="label-required"><code>label</code> (required)</h5>
+<p><strong>type:</strong> <code>string</code></p>
+<p>The label for this language to show to users, for example in the language switcher. Most often you will want this to be the language’s name as a user of that language would expect to read it, e.g. <code>"English"</code>, <code>"العربية"</code>, or <code>"简体中文"</code>.</p>
+<h5 id="lang"><code>lang</code></h5>
+<p><strong>type:</strong> <code>string</code></p>
+<p>The BCP-47 tag for this language, e.g. <code>"en"</code>, <code>"ar"</code>, or <code>"zh-CN"</code>. If not set, the language’s directory name will be used by default. Language tags with regional subtags (e.g. <code>"pt-BR"</code> or <code>"en-US"</code>) will use built-in UI translations for their base language if no region-specific translations are found.</p>
+<h5 id="dir"><code>dir</code></h5>
+<p><strong>type:</strong> <code>'ltr' | 'rtl'</code></p>
+<p>The writing direction of this language; <code>"ltr"</code> for left-to-right (the default) or <code>"rtl"</code> for right-to-left.</p>
+<h4 id="root-locale">Root locale</h4>
+<p>You can serve the default language without a <code>/lang/</code> directory by setting a <code>root</code> locale:</p>
+<div class="codehilite"><pre><span></span>starlight({
+  locales: {
+    root: {
+      label: "English",
+      lang: "en",
+    },
+    fr: {
+      label: "Français",
+    },
+  },
+});
+</pre></div>
+
+<p>For example, this allows you to serve <code>/getting-started/</code> as an English route and use <code>/fr/getting-started/</code> as the equivalent French page.</p>
+<h3 id="defaultlocale"><code>defaultLocale</code></h3>
+<p><strong>type:</strong> <code>string</code></p>
+<p>Set the language which is the default for this site.
+The value should match one of the keys of your <a href="#locales"><code>locales</code></a> object.
+(If your default language is your <a href="#root-locale">root locale</a>, you can skip this.)</p>
+<p>The default locale will be used to provide fallback content where translations are missing.</p>
+<h3 id="social"><code>social</code></h3>
+<p><strong>type:</strong> <code>{<code>Array&lt;{ label: string; icon:</code>}<a href="#">StarlightIcon</a>{<code>; href: string }&gt;</code>}</code></p>
+<p>Optional details about the social media accounts for this site.
+Each entry will be displayed as an icon link in the site header.</p>
+<div class="codehilite"><pre><span></span><span class="nx">starlight</span><span class="p">({</span>
+<span class="w">	</span><span class="nx">social</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">		</span><span class="p">{</span><span class="w"> </span><span class="nx">icon</span><span class="o">:</span><span class="w"> </span><span class="s1">'codeberg'</span><span class="p">,</span><span class="w"> </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s1">'Codeberg'</span><span class="p">,</span><span class="w"> </span><span class="nx">href</span><span class="o">:</span><span class="w"> </span><span class="s1">'https://codeberg.org/knut'</span><span class="w"> </span><span class="p">},</span>
+<span class="w">		</span><span class="p">{</span><span class="w"> </span><span class="nx">icon</span><span class="o">:</span><span class="w"> </span><span class="s1">'discord'</span><span class="p">,</span><span class="w"> </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s1">'Discord'</span><span class="p">,</span><span class="w"> </span><span class="nx">href</span><span class="o">:</span><span class="w"> </span><span class="s1">'https://astro.build/chat'</span><span class="w"> </span><span class="p">},</span>
+<span class="w">		</span><span class="p">{</span><span class="w"> </span><span class="nx">icon</span><span class="o">:</span><span class="w"> </span><span class="s1">'github'</span><span class="p">,</span><span class="w"> </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s1">'GitHub'</span><span class="p">,</span><span class="w"> </span><span class="nx">href</span><span class="o">:</span><span class="w"> </span><span class="s1">'https://github.com/withastro'</span><span class="w"> </span><span class="p">},</span>
+<span class="w">		</span><span class="p">{</span><span class="w"> </span><span class="nx">icon</span><span class="o">:</span><span class="w"> </span><span class="s1">'gitlab'</span><span class="p">,</span><span class="w"> </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s1">'GitLab'</span><span class="p">,</span><span class="w"> </span><span class="nx">href</span><span class="o">:</span><span class="w"> </span><span class="s1">'https://gitlab.com/delucis'</span><span class="w"> </span><span class="p">},</span>
+<span class="w">		</span><span class="p">{</span><span class="w"> </span><span class="nx">icon</span><span class="o">:</span><span class="w"> </span><span class="s1">'mastodon'</span><span class="p">,</span><span class="w"> </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s1">'Mastodon'</span><span class="p">,</span><span class="w"> </span><span class="nx">href</span><span class="o">:</span><span class="w"> </span><span class="s1">'https://m.webtoo.ls/@astro'</span><span class="w"> </span><span class="p">},</span>
+<span class="w">	</span><span class="p">],</span>
+<span class="p">}),</span>
+</pre></div>
+
+<h3 id="customcss"><code>customCss</code></h3>
+<p><strong>type:</strong> <code>string[]</code></p>
+<p>Provide CSS files to customize the look and feel of your Starlight site.</p>
+<p>Supports local CSS files relative to the root of your project, e.g. <code>'./src/custom.css'</code>, and CSS you installed as an npm module, e.g. <code>'@fontsource/roboto'</code>.</p>
+<div class="codehilite"><pre><span></span><span class="nx">starlight</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">customCss</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"./src/custom-styles.css"</span><span class="p">,</span><span class="w"> </span><span class="s2">"@fontsource/roboto"</span><span class="p">],</span>
+<span class="p">});</span>
+</pre></div>
+
+<h3 id="markdown"><code>markdown</code></h3>
+<p><strong>type:</strong> <code>{ headingLinks?: boolean }</code><br />
+<strong>default:</strong> <code>{ headingLinks: true }</code></p>
+<p>Configure Starlight’s Markdown processing.</p>
+<h4 id="headinglinks"><code>headingLinks</code></h4>
+<p><strong>type:</strong> <code>boolean</code><br />
+<strong>default:</strong> <code>true</code></p>
+<p>Controls whether or not headings are rendered with a clickable anchor link.</p>
+<div class="codehilite"><pre><span></span><span class="nx">starlight</span><span class="p">({</span>
+<span class="w">	</span><span class="nx">markdown</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">		</span><span class="c1">// Disable Starlight’s clickable heading anchor links.</span>
+<span class="w">		</span><span class="nx">headingLinks</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">	</span><span class="p">},</span>
+<span class="p">}),</span>
+</pre></div>
+
+<h3 id="expressivecode"><code>expressiveCode</code></h3>
+<p><strong>type:</strong> <code>StarlightExpressiveCodeOptions | boolean</code><br />
+<strong>default:</strong> <code>true</code></p>
+<p>Starlight uses <a href="https://expressive-code.com">Expressive Code</a> to render code blocks and add support for highlighting parts of code examples, adding filenames to code blocks, and more.
+See the <a href="#">“Code blocks” guide</a> to learn how to use Expressive Code syntax in your Markdown and MDX content.</p>
+<p>You can use any of the standard <a href="https://expressive-code.com/reference/configuration/">Expressive Code configuration options</a> as well as some Starlight-specific properties, by setting them in Starlight’s <code>expressiveCode</code> option.
+For example, set Expressive Code’s <code>styleOverrides</code> option to override the default CSS. This enables customizations like giving your code blocks rounded corners:</p>
+<div class="codehilite"><pre><span></span>starlight({
+  expressiveCode: {
+    styleOverrides: { borderRadius: "0.5rem" },
+  },
+});
+</pre></div>
+
+<p>If you want to disable Expressive Code, set <code>expressiveCode: false</code> in your Starlight config:</p>
+<div class="codehilite"><pre><span></span>starlight({
+  expressiveCode: false,
+});
+</pre></div>
+
+<p>In addition to the standard Expressive Code options, you can also set the following Starlight-specific properties in your <code>expressiveCode</code> config to further customize theme behavior for your code blocks :</p>
+<h4 id="themes"><code>themes</code></h4>
+<p><strong>type:</strong> <code>Array&lt;string | ThemeObject | ExpressiveCodeTheme&gt;</code><br />
+<strong>default:</strong> <code>['starlight-dark', 'starlight-light']</code></p>
+<p>Set the themes used to style code blocks.
+See the <a href="https://expressive-code.com/guides/themes/">Expressive Code <code>themes</code> documentation</a> for details of the supported theme formats.</p>
+<p>Starlight uses the dark and light variants of Sarah Drasner’s <a href="https://github.com/sdras/night-owl-vscode-theme">Night Owl theme</a> by default.</p>
+<p>If you provide at least one dark and one light theme, Starlight will automatically keep the active code block theme in sync with the current site theme.
+Configure this behavior with the <a href="#usestarlightdarkmodeswitch"><code>useStarlightDarkModeSwitch</code></a> option.</p>
+<h4 id="usestarlightdarkmodeswitch"><code>useStarlightDarkModeSwitch</code></h4>
+<p><strong>type:</strong> <code>boolean</code><br />
+<strong>default:</strong> <code>true</code></p>
+<p>When <code>true</code>, code blocks automatically switch between light and dark themes when the site theme changes.
+When <code>false</code>, you must manually add CSS to handle switching between multiple themes.</p>
+<p>:::note
+When setting <code>themes</code>, you must provide at least one dark and one light theme for the Starlight dark mode switch to work.
+:::</p>
+<h4 id="usestarlightuithemecolors"><code>useStarlightUiThemeColors</code></h4>
+<p><strong>type:</strong> <code>boolean</code><br />
+<strong>default:</strong> <code>true</code> if <code>themes</code> is not set, otherwise <code>false</code></p>
+<p>When <code>true</code>, Starlight's CSS variables are used for the colors of code block UI elements (backgrounds, buttons, shadows etc.), matching the <a href="#">site color theme</a>.
+When <code>false</code>, the colors provided by the active syntax highlighting theme are used for these elements.</p>
+<p>:::note
+When using custom themes and setting this to <code>true</code>, you must provide at least one dark and one light theme to ensure proper color contrast.
+:::</p>
+<h3 id="pagefind"><code>pagefind</code></h3>
+<p><strong>type:</strong> <code>boolean | <a href="#pagefindoptions">PagefindOptions</a></code><br />
+<strong>default:</strong> <code>true</code></p>
+<p>Configure Starlight’s default site search provider <a href="https://pagefind.app/">Pagefind</a>.</p>
+<p>Set to <code>false</code> to disable indexing your site with Pagefind.
+This will also hide the default search UI if in use.</p>
+<p>Pagefind cannot be enabled when the <a href="#prerender"><code>prerender</code></a> option is set to <code>false</code>.</p>
+<p>Set <code>pagefind</code> to an object to configure the Pagefind search client:</p>
+<ul>
+<li>See <a href="https://pagefind.app/docs/ranking/">“Customize Pagefind's result ranking”</a> in the Pagefind documentation for more details about using the <code>pagefind.ranking</code> option to control how search result ranking is calculated</li>
+<li>See <a href="https://pagefind.app/docs/multisite/">“Searching multiple sites”</a> in the Pagefind documentation for more details about using the <code>pagefind.mergeIndex</code> option to control how to search accros multiple sites</li>
+</ul>
+<h4 id="pagefindoptions"><code>PagefindOptions</code></h4>
+<div class="codehilite"><pre><span></span><span class="kd">interface</span><span class="w"> </span><span class="nx">PagefindOptions</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">ranking</span><span class="o">?:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">pageLength?</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">termFrequency?</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">termSaturation?</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">termSimilarity?</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">  </span><span class="p">};</span>
+<span class="w">  </span><span class="nx">indexWeight?</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">mergeIndex?</span><span class="o">:</span><span class="w"> </span><span class="kt">Array</span><span class="o">&lt;</span><span class="p">{</span>
+<span class="w">    </span><span class="nx">bundlePath</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">indexWeight?</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">basePath?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">baseUrl?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">mergeFilter?</span><span class="o">:</span><span class="w"> </span><span class="kt">Record</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kt">string</span><span class="p">[]</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">language?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">ranking</span><span class="o">?:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">pageLength?</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">      </span><span class="nx">termFrequency?</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">      </span><span class="nx">termSaturation?</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">      </span><span class="nx">termSimilarity?</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="w">  </span><span class="p">}</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3 id="prerender"><code>prerender</code></h3>
+<p><strong>type:</strong> <code>boolean</code><br />
+<strong>default:</strong> <code>true</code></p>
+<p>Define whether Starlight pages should be pre-rendered to static HTML or on-demand rendered by an <a href="https://docs.astro.build/en/guides/on-demand-rendering/">SSR adapter</a>.</p>
+<p>Starlight pages are pre-rendered by default.
+If you are using an SSR adapter and want to render Starlight pages on demand, set <code>prerender: false</code>.</p>
+<h3 id="head"><code>head</code></h3>
+<p><strong>type:</strong> <a href="#headconfig"><code>HeadConfig[]</code></a></p>
+<p>Add custom tags to the <code>&lt;head&gt;</code> of your Starlight site.
+Can be useful for adding analytics and other third-party scripts and resources.</p>
+<div class="codehilite"><pre><span></span><span class="nx">starlight</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">head</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="c1">// Example: add Fathom analytics script tag.</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">tag</span><span class="o">:</span><span class="w"> </span><span class="s2">"script"</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">attrs</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">src</span><span class="o">:</span><span class="w"> </span><span class="s2">"https://cdn.usefathom.com/script.js"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"data-site"</span><span class="o">:</span><span class="w"> </span><span class="s2">"MY-FATHOM-ID"</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">defer</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="p">});</span>
+</pre></div>
+
+<p>Entries in <code>head</code> are converted directly to HTML elements and do not pass through Astro’s <a href="https://docs.astro.build/en/guides/client-side-scripts/#script-processing">script</a> or <a href="https://docs.astro.build/en/guides/styling/#styling-in-astro">style</a> processing.
+If you need to import local assets like scripts, styles, or images, <a href="#">override the Head component</a>.</p>
+<h4 id="headconfig"><code>HeadConfig</code></h4>
+<div class="codehilite"><pre><span></span><span class="kd">interface</span><span class="w"> </span><span class="nx">HeadConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">tag</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">attrs?</span><span class="o">:</span><span class="w"> </span><span class="kt">Record</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">undefined</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">content?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3 id="lastupdated"><code>lastUpdated</code></h3>
+<p><strong>type:</strong> <code>boolean</code><br />
+<strong>default:</strong> <code>false</code></p>
+<p>Control whether the footer shows when the page was last updated.</p>
+<p>By default, this feature relies on your repository’s Git history and may not be accurate on some deployment platforms performing <a href="https://git-scm.com/docs/git-clone#Documentation/git-clone.txt---depthltdepthgt">shallow clones</a>. A page can override this setting or the Git-based date using the <a href="#"><code>lastUpdated</code> frontmatter field</a>.</p>
+<h3 id="pagination"><code>pagination</code></h3>
+<p><strong>type:</strong> <code>boolean</code><br />
+<strong>default:</strong> <code>true</code></p>
+<p>Define if the footer should include previous and next page links.</p>
+<p>A page can override this setting or the link text and/or URL using the <a href="#"><code>prev</code></a> and <a href="#"><code>next</code></a> frontmatter fields.</p>
+<h3 id="favicon"><code>favicon</code></h3>
+<p><strong>type:</strong> <code>string</code><br />
+<strong>default:</strong> <code>'/favicon.svg'</code></p>
+<p>Set the path of the default favicon for your website which should be located in the <code>public/</code> directory and be a valid (<code>.ico</code>, <code>.gif</code>, <code>.jpg</code>, <code>.png</code>, or <code>.svg</code>) icon file.</p>
+<div class="codehilite"><pre><span></span><span class="nx">starlight</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">favicon</span><span class="o">:</span><span class="w"> </span><span class="s1">'/images/favicon.svg'</span><span class="p">,</span>
+<span class="p">}),</span>
+</pre></div>
+
+<p>If you need to set additional variants or fallback favicons, you can add tags using the <a href="#head"><code>head</code> option</a>:</p>
+<div class="codehilite"><pre><span></span><span class="nx">starlight</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">favicon</span><span class="o">:</span><span class="w"> </span><span class="s2">"/images/favicon.svg"</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">head</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="c1">// Add ICO favicon fallback for Safari.</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">tag</span><span class="o">:</span><span class="w"> </span><span class="s2">"link"</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">attrs</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">rel</span><span class="o">:</span><span class="w"> </span><span class="s2">"icon"</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">href</span><span class="o">:</span><span class="w"> </span><span class="s2">"/images/favicon.ico"</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">sizes</span><span class="o">:</span><span class="w"> </span><span class="s2">"32x32"</span><span class="p">,</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="p">});</span>
+</pre></div>
+
+<h3 id="titledelimiter"><code>titleDelimiter</code></h3>
+<p><strong>type:</strong> <code>string</code><br />
+<strong>default:</strong> <code>'|'</code></p>
+<p>Sets the delimiter between page title and site title in the page’s <code>&lt;title&gt;</code> tag, which is displayed on browser tabs.</p>
+<p>By default, every page has a <code>&lt;title&gt;</code> of <code>Page Title | Site Title</code>.
+For example, this page is titled “Configuration Reference” and this site is titled “Starlight”, so the <code>&lt;title&gt;</code> for this page is “Configuration Reference | Starlight”.</p>
+<h3 id="disable404route"><code>disable404Route</code></h3>
+<p><strong>type:</strong> <code>boolean</code><br />
+<strong>default:</strong> <code>false</code></p>
+<p>Disables injecting Starlight's default <a href="https://docs.astro.build/en/basics/astro-pages/#custom-404-error-page">404 page</a>. To use a custom <code>src/pages/404.astro</code> route in your project, set this option to <code>true</code>.</p>
+<h3 id="routemiddleware"><code>routeMiddleware</code></h3>
+<p><strong>type:</strong> <code>string | string[]</code></p>
+<p>Provide paths to route middleware that can modify how Starlight processes your data.
+These file paths must not conflict with <a href="https://docs.astro.build/en/guides/middleware/">Astro’s middleware</a>.</p>
+<p>See the <a href="#">Route Data guide</a> for details about how to create route middleware.</p>
+<h3 id="components"><code>components</code></h3>
+<p><strong>type:</strong> <code>Record&lt;string, string&gt;</code></p>
+<p>Provide the paths to components to override Starlight’s default implementations.</p>
+<div class="codehilite"><pre><span></span><span class="nx">starlight</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">components</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">SocialLinks</span><span class="o">:</span><span class="w"> </span><span class="s2">"./src/components/MySocialLinks.astro"</span><span class="p">,</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="p">});</span>
+</pre></div>
+
+<p>See the <a href="#">Overrides Reference</a> for details of all the components that you can override.</p>
+<h3 id="plugins"><code>plugins</code></h3>
+<p><strong>type:</strong> <a href="#"><code>StarlightPlugin[]</code></a></p>
+<p>Extend Starlight with custom plugins.
+Plugins apply changes to your project to modify or add to Starlight's features.</p>
+<p>Visit the <a href="#">plugins showcase</a> to see a list of available plugins.</p>
+<div class="codehilite"><pre><span></span><span class="nx">starlight</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">plugins</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="nx">starlightPlugin</span><span class="p">()],</span>
+<span class="p">});</span>
+</pre></div>
+
+<p>See the <a href="#">Plugins Reference</a> for details about creating your own plugins.</p>
+<h3 id="credits"><code>credits</code></h3>
+<p><strong>type:</strong> <code>boolean</code><br />
+<strong>default:</strong> <code>false</code></p>
+<p>Enable displaying a “Built with Starlight” link in your site’s footer.</p>
+<div class="codehilite"><pre><span></span><span class="nx">starlight</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">credits</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="p">});</span>
+</pre></div>
+
+<h2 id="configure-content-collections">Configure content collections</h2>
+<p>Starlight uses Astro <a href="https://docs.astro.build/en/guides/content-collections/">content collections</a> to load your content.
+Starlight’s content loaders and schemas help configure collections as required.</p>
+<div class="codehilite"><pre><span></span><span class="c1">// src/content.config.ts</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">defineCollection</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"astro:content"</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">docsLoader</span><span class="p">,</span><span class="w"> </span><span class="nx">i18nLoader</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@astrojs/starlight/loaders"</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">docsSchema</span><span class="p">,</span><span class="w"> </span><span class="nx">i18nSchema</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@astrojs/starlight/schema"</span><span class="p">;</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">collections</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">docs</span><span class="o">:</span><span class="w"> </span><span class="nx">defineCollection</span><span class="p">({</span><span class="w"> </span><span class="nx">loader</span><span class="o">:</span><span class="w"> </span><span class="nx">docsLoader</span><span class="p">(),</span><span class="w"> </span><span class="nx">schema</span><span class="o">:</span><span class="w"> </span><span class="nx">docsSchema</span><span class="p">()</span><span class="w"> </span><span class="p">}),</span>
+<span class="w">  </span><span class="c1">// Optional: the i18n collection is used to translate UI in multilingual sites</span>
+<span class="w">  </span><span class="nx">i18n</span><span class="o">:</span><span class="w"> </span><span class="nx">defineCollection</span><span class="p">({</span><span class="w"> </span><span class="nx">loader</span><span class="o">:</span><span class="w"> </span><span class="nx">i18nLoader</span><span class="p">(),</span><span class="w"> </span><span class="nx">schema</span><span class="o">:</span><span class="w"> </span><span class="nx">i18nSchema</span><span class="p">()</span><span class="w"> </span><span class="p">}),</span>
+<span class="p">};</span>
+</pre></div>
+
+<h3 id="loaders">Loaders</h3>
+<p>Starlight exports the following <a href="https://docs.astro.build/en/reference/content-loader-reference/">Astro loaders</a> from the <code>@astrojs/starlight/loaders</code> module to simplify configuring content collections.</p>
+<h4 id="docsloader"><code>docsLoader()</code></h4>
+<p>The <code>docsLoader()</code> loads local Markdown, MDX, and Markdoc files from the <code>src/content/docs/</code> directory.
+File names starting with an underscore (<code>_</code>) are ignored.</p>
+<h5 id="import">Import</h5>
+<div class="codehilite"><pre><span></span><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">docsLoader</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@astrojs/starlight/loaders"</span><span class="p">;</span>
+</pre></div>
+
+<h5 id="options">Options</h5>
+<h6 id="generateid"><code>generateId()</code></h6>
+<p><strong>type:</strong> <code>({ entry: string; base: URL; data: Record&lt;string, unknown&gt; }) =&gt; string</code></p>
+<p>By default, pages generated using <code>docsLoader()</code> process your file names using a sluggifier, which removes special characters and lowercases the file name.
+If you want to override this default, provide your own custom <code>generateId()</code> function.</p>
+<p>For example, this can be useful to preserve special characters that would be removed.
+By default, <code>Example.File.md</code> would be served at <code>/examplefile</code>.
+If you wanted to serve it at <code>/Example.File</code>, you could do so by defining a custom <code>generateId()</code> function:</p>
+<div class="codehilite"><pre><span></span><span class="nx">docsLoader</span><span class="p">({</span>
+<span class="w">	</span><span class="c1">// Remove the `.md` or `.mdx` extension, but otherwise don’t process filenames.</span>
+<span class="w">	</span><span class="nx">generateId</span><span class="o">:</span><span class="w"> </span><span class="p">({</span><span class="w"> </span><span class="nx">entry</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">entry</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">).</span><span class="nx">slice</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">).</span><span class="nx">join</span><span class="p">(</span><span class="s1">'.'</span><span class="p">),</span>
+<span class="p">}),</span>
+</pre></div>
+
+<p>See <a href="https://docs.astro.build/en/reference/content-loader-reference/#generateid"><code>generateId()</code> in the Astro docs</a> for more details.</p>
+<h4 id="i18nloader"><code>i18nLoader()</code></h4>
+<p>The <code>i18nLoader()</code> loads local JSON and YAML files from the <code>src/content/i18n/</code> directory.
+File names starting with an underscore (<code>_</code>) are ignored.</p>
+<h5 id="import_1">Import</h5>
+<div class="codehilite"><pre><span></span><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">i18nLoader</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@astrojs/starlight/loaders"</span><span class="p">;</span>
+</pre></div>
+
+<h5 id="options_1">Options</h5>
+<p>There are currently no options to configure <code>i18nLoader()</code>.</p>
+<h3 id="schemas">Schemas</h3>
+<p>Starlight provides the following <a href="https://docs.astro.build/en/guides/content-collections/#defining-the-collection-schema">content collection schemas</a> from the <code>@astrojs/starlight/schema</code> module.
+These schemas must be used for the <code>docs</code> and <code>i18n</code> collections Starlight depends on.</p>
+<h4 id="docsschema"><code>docsSchema()</code></h4>
+<p>The <code>docsSchema()</code> parses frontmatter for all your content in the <code>docs</code> collection.</p>
+<h5 id="import_2">Import</h5>
+<div class="codehilite"><pre><span></span><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">docsSchema</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@astrojs/starlight/schema"</span><span class="p">;</span>
+</pre></div>
+
+<h5 id="options_2">Options</h5>
+<h6 id="extend"><code>extend</code></h6>
+<p><strong>type:</strong> Zod schema or function that returns a Zod schema<br />
+<strong>default:</strong> <code>z.object({})</code></p>
+<p>Extend Starlight’s frontmatter schema with additional fields.
+See <a href="#">“Customize frontmatter schema”</a> for more details about using the <code>extend</code> option.</p>
+<h4 id="i18nschema"><code>i18nSchema()</code></h4>
+<p>The <code>i18nSchema()</code> parses all data files in the <code>i18n</code> collection.</p>
+<h5 id="import_3">Import</h5>
+<div class="codehilite"><pre><span></span><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">i18nSchema</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@astrojs/starlight/schema"</span><span class="p">;</span>
+</pre></div>
+
+<h5 id="options_3">Options</h5>
+<h6 id="extend_1"><code>extend</code></h6>
+<p><strong>type:</strong> Zod object<br />
+<strong>default:</strong> <code>z.object({})</code></p>
+<p>Extend Starlight’s i18n schema with additional fields.
+See <a href="#">“Extend translation schema”</a> for more details about using the <code>extend</code> option.</p>
+        </article>
+        <nav class="docs-pagination" aria-label="Pagination"><a class="page-link prev" href="../contents/editing/add-new-doc.html"><small>← Previous page</small><span>Adding Document</span></a><a class="page-link next" href="plugin.html"><small>Next page →</small><span>Plugins Reference</span></a></nav>
+      </div>
+
+    <!-- Troisième colonne : table des matières + scrollspy (js/docs.js) -->
+    <aside class="docs-toc">
+      <h2 class="toc-title">On this page</h2>
+      <nav class="toc-list" id="toc-list"><a class="toc-h2" href="#configure-the-starlight-integration">Configure the starlight integration</a><a class="toc-h3" href="#title-required">title (required)</a><a class="toc-h3" href="#description">description</a><a class="toc-h3" href="#logo">logo</a><a class="toc-h3" href="#tableofcontents">tableOfContents</a><a class="toc-h3" href="#editlink">editLink</a><a class="toc-h3" href="#sidebar">sidebar</a><a class="toc-h3" href="#locales">locales</a><a class="toc-h3" href="#defaultlocale">defaultLocale</a><a class="toc-h3" href="#social">social</a><a class="toc-h3" href="#customcss">customCss</a><a class="toc-h3" href="#markdown">markdown</a><a class="toc-h3" href="#expressivecode">expressiveCode</a><a class="toc-h3" href="#pagefind">pagefind</a><a class="toc-h3" href="#prerender">prerender</a><a class="toc-h3" href="#head">head</a><a class="toc-h3" href="#lastupdated">lastUpdated</a><a class="toc-h3" href="#pagination">pagination</a><a class="toc-h3" href="#favicon">favicon</a><a class="toc-h3" href="#titledelimiter">titleDelimiter</a><a class="toc-h3" href="#disable404route">disable404Route</a><a class="toc-h3" href="#routemiddleware">routeMiddleware</a><a class="toc-h3" href="#components">components</a><a class="toc-h3" href="#plugins">plugins</a><a class="toc-h3" href="#credits">credits</a><a class="toc-h2" href="#configure-content-collections">Configure content collections</a><a class="toc-h3" href="#loaders">Loaders</a><a class="toc-h3" href="#schemas">Schemas</a></nav>
+    </aside>
+    </div>
+  </main>
+
+  <!-- Bouton flottant (mobile) : ouvre le tiroir de la sidebar -->
+  <button class="sidebar-open-btn" id="sidebar-open-btn" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16"/><path d="M4 12h10"/><path d="M4 18h16"/></svg>
+    Contents
+  </button>
+  <div class="nav-backdrop" id="sidebar-backdrop"></div>
+
+  <!-- ==================== PIED DE PAGE ==================== -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-col"><h4>Join Our Community</h4><ul><li><a href="https://github.com/themefisher/dockit/discussions" target="_blank" rel="noopener">GitHub Discussions</a></li><li><a href="#">Discord Community</a></li><li><a href="#">Twitter Updates</a></li><li><a href="#">Contributing Guide</a></li></ul></div>
+      <div class="footer-col"><h4>Helpful Links</h4><ul><li><a href="../getting-started/introduction/overview.html">Getting Started</a></li><li><a href="../../privacy-policy.html">Privacy Policy</a></li><li><a href="../../terms-conditions.html">Terms and Conditions</a></li><li><a href="../../about.html">About Us</a></li><li><a href="../../404.html">Troubleshooting</a></li></ul></div>
+      <div class="footer-col"><h4>Resources</h4><ul><li><a href="../getting-started/introduction/overview.html">Documentation Hub</a></li><li><a href="#">Theme Gallery</a></li><li><a href="#">Best Practices</a></li><li><a href="#">Performance Tips</a></li><li><a href="#">Migration Guide</a></li></ul></div>
+      <div class="footer-col">
+        <h4>Connect With Us</h4>
+        <form class="mail-form" action="#" aria-label="Newsletter">
+          <input type="email" placeholder="Enter your email" required aria-label="Email">
+          <button type="submit" aria-label="OK">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21.0477 3.05293C18.8697 0.707361 2.48648 6.4532 2.50001 8.551C2.51535 10.9299 8.89809 11.6617 10.6672 12.1581C11.7311 12.4565 12.016 12.7625 12.2613 13.8781C13.3723 18.9305 13.9301 21.4435 15.2014 21.4996C17.2278 21.5892 23.1733 5.342 21.0477 3.05293Z" stroke="currentColor" stroke-width="1.5"/><path d="M11.5 12.5L15 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </form>
+        <p class="mail-form-feedback" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p class="copyright">Designed and Developed by <a href="https://themefisher.com" target="_blank" rel="noopener">Themefisher</a> Copyright © 2025.</p>
+      <div class="socials"><a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a><a href="https://slack.com/" target="_blank" rel="noopener" aria-label="Slack"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zm1.271 0a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zm0 1.271a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zm10.122 2.521a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zm-1.268 0a2.528 2.528 0 0 1-2.523 2.521 2.528 2.528 0 0 1-2.52-2.521V2.522A2.528 2.528 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zm-2.523 10.122a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.528 2.528 0 0 1-2.52-2.522v-2.522h2.52zm0-1.268a2.528 2.528 0 0 1-2.523-2.523 2.528 2.528 0 0 1 2.523-2.52h6.313A2.528 2.528 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/></svg></a><a href="https://www.github.com/" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a><a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a></div>
+    </div>
+  </footer>
+
+  <!-- ==================== MODALE DE RECHERCHE ==================== -->
+  <div class="search-modal" id="search-modal" hidden>
+    <div class="search-modal-backdrop" data-search-close></div>
+    <div class="search-modal-panel" role="dialog" aria-modal="true" aria-label="Search documentation">
+      <form class="search-form" role="search" onsubmit="return false;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input id="search-input" type="text" placeholder="Search documentation…" autocomplete="off" aria-label="Search documentation">
+        <kbd>Esc</kbd>
+      </form>
+      <div class="search-results" id="search-results"></div>
+      <div class="search-hint">
+        <span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span>
+        <span><kbd>↵</kbd> to open</span>
+        <span><kbd>Esc</kbd> to close</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts : l'index doit être chargé avant search.js -->
+  <script src="../../js/search-index.js"></script>
+  <script src="../../js/main.js"></script>
+  <script src="../../js/search.js"></script>
+  <script src="../../js/docs.js"></script>
+</body>
+</html>

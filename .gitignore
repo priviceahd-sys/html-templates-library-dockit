@@ -1,0 +1,14 @@
+# ---- Fichiers système / éditeurs ----
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# ---- Archives (inutiles dans le dépôt) ----
+*.zip
+
+# ---- Dépendances éventuelles ----
+node_modules/

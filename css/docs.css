@@ -1,0 +1,755 @@
+/* ==========================================================================
+   DOCKIT STATIQUE — docs.css
+   --------------------------------------------------------------------------
+   Styles spécifiques aux PAGES DE DOCUMENTATION :
+     1. La mise en page à 3 colonnes (sidebar | contenu | table des matières)
+     2. La sidebar de navigation (groupes repliables + état actif)
+     3. Le contenu « prose » (titres, paragraphes, images, tableaux, citations)
+     4. Les blocs de code (coloration syntaxique + bouton « copier »)
+     5. Les onglets de code (npm / pnpm / yarn)
+     6. La table des matières de droite avec indicateur de lecture
+     7. La pagination précédent / suivant
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. MISE EN PAGE À 3 COLONNES
+   -------------------------------------------------------------------------- */
+.docs-layout {
+  display: grid;
+  grid-template-columns: 1fr;              /* Mobile : contenu seul */
+  gap: 2.5rem;
+  align-items: start;
+  padding-block: 2.5rem 5rem;
+}
+
+@media (min-width: 1024px) {
+  .docs-layout {
+    grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  }
+}
+
+/* À partir de 1280px, la table des matières réapparaît à droite */
+@media (min-width: 1280px) {
+  .docs-layout {
+    grid-template-columns: var(--sidebar-width) minmax(0, 1fr) var(--toc-width);
+    gap: 3rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   2. SIDEBAR DE NAVIGATION
+   --------------------------------------------------------------------------
+   Sur desktop : colonne fixe qui défile indépendamment.
+   Sur mobile (< 1024px) : tiroir hors écran ouvert par js/docs.js.
+   -------------------------------------------------------------------------- */
+.docs-sidebar {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .docs-sidebar {
+    display: block;
+    position: sticky;                       /* Reste visible au défilement */
+    top: calc(var(--header-height) + 1rem);
+    max-height: calc(100vh - var(--header-height) - 2rem);
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    scrollbar-width: thin;
+  }
+}
+
+/* --- Version mobile : tiroir coulissant ------------------------------------- */
+@media (max-width: 1023.98px) {
+  .docs-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 200;
+    width: min(320px, 88vw);
+    background: var(--bg-card);
+    border-right: 1px solid var(--border-color);
+    padding: 5.5rem 1.25rem 2rem;
+    overflow-y: auto;
+    transform: translateX(-100%);           /* Caché à gauche */
+    transition: transform var(--transition-base);
+  }
+
+  .docs-sidebar.open {
+    transform: translateX(0);
+    display: block;
+  }
+
+  /* Bouton flottant pour ouvrir la sidebar sur mobile */
+  .sidebar-open-btn {
+    position: fixed;
+    bottom: 1.25rem;
+    left: 1.25rem;
+    z-index: 150;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: var(--gradient-primary);
+    color: #fff;
+    font-weight: 600;
+    border-radius: 999px;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .sidebar-open-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sidebar-open-btn {
+    display: none;
+  }
+  /* Voile de fond du tiroir mobile — réutilise .nav-backdrop (layout.css) */
+}
+
+/* --- Groupes de la sidebar ---------------------------------------------------- */
+.sidebar-group {
+  margin-bottom: 1.5rem;
+}
+
+/* Titre de groupe cliquable : replie/déplie la liste (js/docs.js) */
+.sidebar-group-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.5rem 0.25rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+}
+
+.sidebar-group-title:hover {
+  color: var(--text-heading);
+}
+
+.sidebar-group-title .chevron {
+  width: 14px;
+  height: 14px;
+  transition: transform var(--transition-base);
+}
+
+/* Groupe replié : flèche vers la gauche, liste masquée */
+.sidebar-group.collapsed .chevron {
+  transform: rotate(-90deg);
+}
+
+.sidebar-group.collapsed .sidebar-links {
+  display: none;
+}
+
+.sidebar-links {
+  border-left: 1px solid var(--border-color);
+  margin-top: 0.5rem;
+  padding-left: 0.25rem;
+}
+
+/* Sous-groupe (ex. « Introduction » dans « Getting Started ») */
+.sidebar-subgroup > .sidebar-sub-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-body);
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.sidebar-subgroup > .sidebar-sub-title:hover {
+  color: var(--text-heading);
+  background: var(--bg-hover);
+}
+
+.sidebar-subgroup > .sidebar-sub-title .chevron {
+  width: 13px;
+  height: 13px;
+  transition: transform var(--transition-base);
+}
+
+.sidebar-subgroup.collapsed > .sidebar-sub-title .chevron {
+  transform: rotate(-90deg);
+}
+
+.sidebar-subgroup.collapsed > ul {
+  display: none;
+}
+
+/* Lien de page dans la sidebar */
+.sidebar-link {
+  display: block;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.92rem;
+  color: var(--text-body);
+  border-radius: var(--radius-sm);
+  border-left: 2px solid transparent;
+  transition: color var(--transition-fast), background-color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.sidebar-link:hover {
+  color: var(--text-heading);
+  background: var(--bg-hover);
+}
+
+/* Page actuellement consultée : liseré primaire + texte éclairci */
+.sidebar-link.active {
+  color: var(--color-primary);
+  border-left-color: var(--color-primary);
+  background: var(--color-primary-soft);
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   3. CONTENU « PROSE » (le corps des pages de documentation)
+   -------------------------------------------------------------------------- */
+.docs-main {
+  min-width: 0;                 /* Empêche la grille de déborder */
+}
+
+/* Pages « autonomes » (about, privacy-policy, terms-conditions) :
+   contenu centré, sans sidebar ni table des matières */
+.standalone-wrap {
+  max-width: 70rem;
+  margin-inline: auto;
+  padding-block: 3rem 5rem;
+}
+
+.docs-content {
+  max-width: var(--content-max);
+}
+
+/* Titre de la page + description (issues du frontmatter des fichiers .md) */
+.docs-content > h1:first-child {
+  font-size: clamp(2rem, 4vw, 2.9rem);
+  letter-spacing: -1px;
+  margin-bottom: 0.75rem;
+}
+
+.docs-description {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  margin-bottom: 2.5rem;
+}
+
+/* Espacement vertical régulier des blocs de contenu */
+.prose h2 {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border-color);
+  letter-spacing: -0.5px;
+}
+
+.prose h3 {
+  margin-top: 2.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose h4 {
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose p {
+  margin-bottom: 1.25rem;
+}
+
+.prose ul:not([class]),
+.prose ol:not([class]) {
+  margin: 0 0 1.25rem 1.4rem;
+}
+
+.prose ul:not([class]) { list-style: disc; }
+.prose ol:not([class]) { list-style: decimal; }
+
+.prose li {
+  margin-bottom: 0.4rem;
+}
+
+.prose li::marker {
+  color: var(--color-primary);
+}
+
+/* Liens dans le contenu : soulignés en primaire */
+.prose a:not(.btn):not(.sidebar-link) {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+.prose a:not(.btn):hover {
+  color: var(--text-heading);
+}
+
+/* Images du contenu : arrondies avec bordure */
+.prose img {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  margin-block: 1.5rem;
+}
+
+/* Citations (blockquote) : barre verticale en dégradé */
+.prose blockquote {
+  margin: 1.5rem 0;
+  padding: 0.25rem 0 0.25rem 1.5rem;
+  border-left: 3px solid;
+  border-image: var(--gradient-primary) 1;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.prose blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Encart « Aside » (notes importantes dans la doc) */
+.aside {
+  margin: 1.5rem 0;
+  padding: 1.25rem 1.5rem;
+  background: var(--color-primary-soft);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 35%, transparent);
+  border-radius: var(--radius-lg);
+}
+
+.aside p:last-child {
+  margin-bottom: 0;
+}
+
+/* --- Tableaux ---------------------------------------------------------------- */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.92rem;
+  display: block;
+  overflow-x: auto;             /* Défilement horizontal sur mobile */
+}
+
+.prose th,
+.prose td {
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--border-color);
+  text-align: left;
+}
+
+.prose th {
+  background: var(--bg-card);
+  color: var(--text-heading);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.prose tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--bg-card) 55%, transparent);
+}
+
+/* --- Code en ligne (`comme ceci`) ---------------------------------------------- */
+.prose :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.15em 0.45em;
+  color: var(--color-primary);
+  white-space: nowrap;
+}
+
+/* Séparateur horizontal entre les parties d'une page */
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 3rem 0;
+}
+
+/* --------------------------------------------------------------------------
+   4. BLOCS DE CODE (coloration syntaxique + bouton copier)
+   --------------------------------------------------------------------------
+   La coloration est générée par Pygments (classes .codehilite) lors de la
+   conversion Markdown → HTML. Les couleurs ci-dessous forment une palette
+   cohérente avec le thème sombre / clair de DocKit.
+   -------------------------------------------------------------------------- */
+.code-block-wrap {
+  position: relative;
+  margin: 1.5rem 0;
+}
+
+.prose pre {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  tab-size: 2;
+  scrollbar-width: thin;
+}
+
+.prose pre code {
+  font-family: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--text-heading);
+  white-space: pre;
+}
+
+/* Bouton « Copier » ajouté dynamiquement par js/docs.js */
+.copy-btn {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--bg-body);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  opacity: 0;
+  transition: opacity var(--transition-fast), color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.code-block-wrap:hover .copy-btn {
+  opacity: 1;
+}
+
+.copy-btn:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.copy-btn.copied {
+  color: #7be1a4;
+  border-color: #7be1a4;
+  opacity: 1;
+}
+
+/* --- Palette de coloration syntaxique (thème sombre, par défaut) -------------
+   Chaque classe correspond à un type de jeton Pygments :
+   .k = mot-clé, .s = chaîne, .c1 = commentaire, .nf = fonction…          */
+.codehilite .k,   /* keyword        */
+.codehilite .kc,
+.codehilite .kd,
+.codehilite .kn,
+.codehilite .kp,
+.codehilite .kr,
+.codehilite .kt   { color: #c792ea; }        /* violet  */
+
+.codehilite .s,   /* string         */
+.codehilite .sa,
+.codehilite .sb,
+.codehilite .sc,
+.codehilite .dl,
+.codehilite .sd,
+.codehilite .s1,
+.codehilite .s2,
+.codehilite .se,
+.codehilite .sh,
+.codehilite .si,
+.codehilite .sx,
+.codehilite .sr,
+.codehilite .ss   { color: #7be1a4; }        /* vert    */
+
+.codehilite .c,   /* comment        */
+.codehilite .c1,
+.codehilite .cm,
+.codehilite .cp,
+.codehilite .cpf,
+.codehilite .cs   { color: #616161; font-style: italic; }
+
+.codehilite .m,   /* number         */
+.codehilite .mb,
+.codehilite .mf,
+.codehilite .mh,
+.codehilite .mi,
+.codehilite .il,
+.codehilite .mo   { color: #ffca7b; }        /* orange  */
+
+.codehilite .n,   /* name           */
+.codehilite .na,
+.codehilite .nb,
+.codehilite .bp,
+.codehilite .nx,
+.codehilite .py,
+.codehilite .nl,
+.codehilite .nn,
+.codehilite .no,
+.codehilite .nd,
+.codehilite .ni,
+.codehilite .nv,
+.codehilite .vc,
+.codehilite .vg,
+.codehilite .vi   { color: #d6deeb; }        /* blanc cassé */
+
+.codehilite .nf,  /* function name  */
+.codehilite .fm,
+.codehilite .nc   { color: #82aaff; }        /* bleu    */
+
+.codehilite .nt,  /* tag HTML       */
+.codehilite .ne   { color: #ff8585; }        /* rouge   */
+
+.codehilite .o,   /* operator       */
+.codehilite .ow   { color: #89ddff; }        /* cyan    */
+
+.codehilite .p    { color: #a0a0a0; }        /* ponctuation */
+
+.codehilite .err  { color: #ff8585; }
+
+/* --- Adaptation de la palette au thème clair ---------------------------------- */
+[data-theme="light"] .codehilite .k,
+[data-theme="light"] .codehilite .kc,
+[data-theme="light"] .codehilite .kd,
+[data-theme="light"] .codehilite .kn,
+[data-theme="light"] .codehilite .kp,
+[data-theme="light"] .codehilite .kr,
+[data-theme="light"] .codehilite .kt   { color: #7c3aed; }
+
+[data-theme="light"] .codehilite .s,
+[data-theme="light"] .codehilite .sa,
+[data-theme="light"] .codehilite .sb,
+[data-theme="light"] .codehilite .sc,
+[data-theme="light"] .codehilite .dl,
+[data-theme="light"] .codehilite .sd,
+[data-theme="light"] .codehilite .s1,
+[data-theme="light"] .codehilite .s2,
+[data-theme="light"] .codehilite .se,
+[data-theme="light"] .codehilite .sh,
+[data-theme="light"] .codehilite .si,
+[data-theme="light"] .codehilite .sx,
+[data-theme="light"] .codehilite .sr,
+[data-theme="light"] .codehilite .ss   { color: #15803d; }
+
+[data-theme="light"] .codehilite .c,
+[data-theme="light"] .codehilite .c1,
+[data-theme="light"] .codehilite .cm,
+[data-theme="light"] .codehilite .cp,
+[data-theme="light"] .codehilite .cpf,
+[data-theme="light"] .codehilite .cs   { color: #9ca3af; }
+
+[data-theme="light"] .codehilite .m,
+[data-theme="light"] .codehilite .mb,
+[data-theme="light"] .codehilite .mf,
+[data-theme="light"] .codehilite .mh,
+[data-theme="light"] .codehilite .mi,
+[data-theme="light"] .codehilite .il,
+[data-theme="light"] .codehilite .mo   { color: #b45309; }
+
+[data-theme="light"] .codehilite .n,
+[data-theme="light"] .codehilite .na,
+[data-theme="light"] .codehilite .nb,
+[data-theme="light"] .codehilite .bp,
+[data-theme="light"] .codehilite .nx,
+[data-theme="light"] .codehilite .py,
+[data-theme="light"] .codehilite .nl,
+[data-theme="light"] .codehilite .nn,
+[data-theme="light"] .codehilite .no,
+[data-theme="light"] .codehilite .nd,
+[data-theme="light"] .codehilite .ni,
+[data-theme="light"] .codehilite .nv,
+[data-theme="light"] .codehilite .vc,
+[data-theme="light"] .codehilite .vg,
+[data-theme="light"] .codehilite .vi   { color: #374151; }
+
+[data-theme="light"] .codehilite .nf,
+[data-theme="light"] .codehilite .fm,
+[data-theme="light"] .codehilite .nc   { color: #2563eb; }
+
+[data-theme="light"] .codehilite .nt,
+[data-theme="light"] .codehilite .ne   { color: #dc2626; }
+
+[data-theme="light"] .codehilite .o,
+[data-theme="light"] .codehilite .ow   { color: #0891b2; }
+
+[data-theme="light"] .codehilite .p    { color: #6b7280; }
+
+/* --------------------------------------------------------------------------
+   5. ONGLETS DE CODE (npm / pnpm / yarn — Tabs de Starlight)
+   -------------------------------------------------------------------------- */
+.code-tabs {
+  margin: 1.5rem 0;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--bg-card);
+}
+
+.code-tabs-nav {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-body);
+  overflow-x: auto;
+}
+
+.code-tab-btn {
+  padding: 0.7rem 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  border-bottom: 2px solid transparent;
+  transition: color var(--transition-fast), border-color var(--transition-fast),
+    background-color var(--transition-fast);
+  white-space: nowrap;
+}
+
+.code-tab-btn:hover {
+  color: var(--text-heading);
+  background: var(--bg-hover);
+}
+
+.code-tab-btn.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+.code-tab-panel {
+  display: none;
+}
+
+.code-tab-panel.active {
+  display: block;
+}
+
+/* Les blocs de code à l'intérieur d'un onglet perdent leur propre bordure */
+.code-tab-panel .code-block-wrap {
+  margin: 0;
+}
+
+.code-tab-panel pre {
+  border: none;
+  border-radius: 0;
+  background: var(--bg-card);
+}
+
+/* --------------------------------------------------------------------------
+   6. TABLE DES MATIÈRES (colonne de droite)
+   -------------------------------------------------------------------------- */
+.docs-toc {
+  display: none;
+}
+
+@media (min-width: 1280px) {
+  .docs-toc {
+    display: block;
+    position: sticky;
+    top: calc(var(--header-height) + 1rem);
+    max-height: calc(100vh - var(--header-height) - 2rem);
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+}
+
+.toc-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.toc-list {
+  border-left: 1px solid var(--border-color);
+}
+
+.toc-list a {
+  display: block;
+  padding: 0.3rem 0 0.3rem 1rem;
+  font-size: 0.85rem;
+  color: var(--text-body);
+  border-left: 2px solid transparent;
+  margin-left: -1px;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.toc-list a:hover {
+  color: var(--text-heading);
+}
+
+/* Titre en cours de lecture : surligné par js/docs.js (scrollspy) */
+.toc-list a.active {
+  color: var(--color-primary);
+  border-left-color: var(--color-primary);
+  font-weight: 500;
+}
+
+/* Les sous-titres (h3) sont légèrement indentés */
+.toc-list .toc-h3 {
+  padding-left: 2rem;
+  font-size: 0.8rem;
+}
+
+/* --------------------------------------------------------------------------
+   7. PAGINATION PRÉCÉDENT / SUIVANT
+   -------------------------------------------------------------------------- */
+.docs-pagination {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 4rem;
+  max-width: var(--content-max);
+}
+
+@media (min-width: 640px) {
+  .docs-pagination {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.page-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1.1rem 1.4rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.page-link:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+.page-link small {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.page-link span {
+  color: var(--text-heading);
+  font-weight: 600;
+}
+
+.page-link.next {
+  text-align: right;
+}
+
+@media (max-width: 639.98px) {
+  .page-link.next {
+    text-align: left;
+  }
+}

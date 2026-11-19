@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <!-- Page générée depuis src/content/docs/configurations/custom-domain.md -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Domain Setup | DocKit</title>
+  <meta name="description" content="Learn how to configure a custom domain for your Dockit documentation site with detailed setup instructions for various hosting platforms.">
+  <link rel="icon" type="image/svg+xml" href="../../assets/images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/layout.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/docs.css">
+  <script>
+    /* Anti-scintillement : applique le thème mémorisé avant le premier rendu */
+    (function () {
+      try {
+        var theme = localStorage.getItem("dockit-theme");
+        if (!theme) theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (e) { document.documentElement.setAttribute("data-theme", "dark"); }
+    })();
+  </script>
+</head>
+
+<body class="page-docs">
+
+  <!-- ==================== EN-TÊTE ==================== -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../../index.html" aria-label="DocKit">
+        <img class="logo-dark" src="../../assets/images/logo-dark.svg" alt="DocKit" width="127" height="32">
+        <img class="logo-light" src="../../assets/images/logo-light.svg" alt="DocKit" width="127" height="32">
+      </a>
+
+      <nav class="main-nav" id="main-nav" aria-label="Documentation">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="../../index.html">Home</a></li>
+          <li><a class="nav-link" href="../getting-started/introduction/overview.html">Documentation</a></li>
+          <li class="has-dropdown">
+            <button class="nav-link" aria-haspopup="true" aria-expanded="false">
+              Reference
+              <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="../reference/configuration.html">Configuration</a></li>
+              <li><a href="../reference/plugin.html">Plugins Reference</a></li>
+            </ul>
+          </li>
+          <li class="nav-cta-mobile"><a class="btn btn-primary" href="../getting-started/introduction/overview.html">Get Started</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn" data-search-open aria-label="Search documentation">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <button class="icon-btn theme-toggle" id="theme-toggle" aria-label="Toggle dark / light theme">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        </button>
+        <div class="lang-switch" aria-label="Langue">
+          <a href="#" data-lang-link="en">EN</a>
+          <a href="#" data-lang-link="fr">FR</a>
+        </div>
+        <a class="btn btn-outline header-cta" href="../getting-started/introduction/overview.html">Get Started</a>
+        <button class="icon-btn menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="nav-backdrop" id="nav-backdrop"></div>
+
+  <!-- ==================== CONTENU ==================== -->
+  <main>
+    <div class="container docs-layout">
+
+      <!-- Première colonne : sidebar de navigation (générée à partir
+           de la structure sidebar.json du thème Astro) -->
+      <aside class="docs-sidebar" id="docs-sidebar">
+        <nav aria-label="Documentation sidebar"><div class="sidebar-group collapsed"><button class="sidebar-group-title" aria-expanded="false">Getting Started<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul class="sidebar-links"><li class="sidebar-subgroup"><button class="sidebar-sub-title" aria-expanded="true">Introduction<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul><li><a class="sidebar-link" href="../getting-started/introduction/overview.html">Overview</a></li><li><a class="sidebar-link" href="../getting-started/introduction/quickstart.html">Quickstart</a></li></ul></li><li class="sidebar-subgroup"><button class="sidebar-sub-title" aria-expanded="true">Global Settings<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul><li><a class="sidebar-link" href="../getting-started/global-settings/configuration.html">Global Configuration</a></li></ul></li><li><a class="sidebar-link" href="../getting-started/navigation.html">Introduction to DocKit</a></li></ul></div><div class="sidebar-group collapsed"><button class="sidebar-group-title" aria-expanded="false">Content<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul class="sidebar-links"><li class="sidebar-subgroup"><button class="sidebar-sub-title" aria-expanded="true">Components and Block<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul><li><a class="sidebar-link" href="../contents/components/using-components.html">Using Components</a></li><li><a class="sidebar-link" href="../contents/components/list-card.html">ListCard Component</a></li><li><a class="sidebar-link" href="../contents/components/grid.html">Grid Component</a></li><li><a class="sidebar-link" href="../contents/components/accordion.html">Accordion Component</a></li><li class="sidebar-subgroup"><button class="sidebar-sub-title" aria-expanded="true">Child Components<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul><li><a class="sidebar-link" href="../contents/components/child-components/new-card.html">NewCard Component</a></li><li class="sidebar-subgroup"><button class="sidebar-sub-title" aria-expanded="true">More Child<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul><li><a class="sidebar-link" href="../contents/components/child-components/more-child/button.html">Button Component</a></li></ul></li></ul></li></ul></li><li class="sidebar-subgroup"><button class="sidebar-sub-title" aria-expanded="true">Editing Content<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul><li><a class="sidebar-link" href="../contents/editing/add-new-doc.html">Adding Document</a></li></ul></li></ul></div><div class="sidebar-group collapsed"><button class="sidebar-group-title" aria-expanded="false">Reference<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul class="sidebar-links"><li><a class="sidebar-link" href="../reference/configuration.html">Configuration</a></li><li><a class="sidebar-link" href="../reference/plugin.html">Plugins Reference</a></li></ul></div><div class="sidebar-group"><button class="sidebar-group-title" aria-expanded="true">Configurations<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul class="sidebar-links"><li><a class="sidebar-link" href="custom-css-js.html">Custom CSS & JavaScript</a></li><li><a class="sidebar-link" href="github.html">GitHub Integration</a></li><li><a class="sidebar-link active" href="custom-domain.html">Custom Domain Setup</a></li></ul></div></nav>
+      </aside>
+
+      <!-- Deuxième colonne : l'article lui-même -->
+      <div class="docs-main">
+        <article class="docs-content prose">
+          <h1>Custom Domain Setup</h1>
+          <p class="docs-description">Learn how to configure a custom domain for your Dockit documentation site with detailed setup instructions for various hosting platforms.</p>
+<p>Setting up a custom domain for your Dockit documentation site helps establish your brand identity and provides a professional appearance. This guide covers the complete process of configuring custom domains across different hosting platforms.</p>
+<h2 id="overview">Overview</h2>
+<p>A custom domain allows you to serve your documentation from your own branded URL instead of the default hosting provider subdomain. For example:</p>
+<ul>
+<li><strong>Default</strong>: <code>your-docs.netlify.app</code> or <code>your-docs.vercel.app</code></li>
+<li><strong>Custom</strong>: <code>docs.yourcompany.com</code> or <code>help.yourcompany.com</code></li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Before setting up a custom domain, ensure you have:</p>
+<ol>
+<li><strong>Domain ownership</strong>: You own or control the domain you want to use</li>
+<li><strong>DNS access</strong>: Ability to modify DNS records for your domain</li>
+<li><strong>Deployed site</strong>: Your Dockit site is already deployed and working</li>
+<li><strong>SSL certificate</strong>: HTTPS support (usually provided automatically)</li>
+</ol>
+<h2 id="domain-configuration-options">Domain Configuration Options</h2>
+<h3 id="subdomain-setup-recommended">Subdomain Setup (Recommended)</h3>
+<p>Using a subdomain is the most common and recommended approach:</p>
+<div class="codehilite"><pre><span></span>docs.yourcompany.com
+help.yourcompany.com
+support.yourcompany.com
+knowledge.yourcompany.com
+</pre></div>
+
+<h3 id="root-domain-setup">Root Domain Setup</h3>
+<p>You can also use your root domain, though this requires additional considerations:</p>
+<div class="codehilite"><pre><span></span>yourcompany.com
+yourdocs.com
+</pre></div>
+
+<h3 id="path-based-setup">Path-based Setup</h3>
+<p>Serve documentation from a specific path:</p>
+<div class="codehilite"><pre><span></span>yourcompany.com/docs
+yourcompany.com/help
+</pre></div>
+
+<h2 id="platform-specific-setup">Platform-Specific Setup</h2>
+<h3 id="netlify-configuration">Netlify Configuration</h3>
+<h4 id="step-1-add-custom-domain-in-netlify">Step 1: Add Custom Domain in Netlify</h4>
+<ol>
+<li>Go to your site's <strong>Site Settings</strong> in Netlify dashboard</li>
+<li>Navigate to <strong>Domain management</strong> → <strong>Custom domains</strong></li>
+<li>Click <strong>Add custom domain</strong></li>
+<li>Enter your domain (e.g., <code>docs.yourcompany.com</code>)</li>
+</ol>
+<h4 id="step-2-configure-dns-records">Step 2: Configure DNS Records</h4>
+<p>Add a CNAME record in your DNS provider:</p>
+<div class="codehilite"><pre><span></span>Type: CNAME
+Name: docs (or your chosen subdomain)
+Value: your-site-name.netlify.app
+TTL: 3600 (or Auto)
+</pre></div>
+
+<h4 id="step-3-enable-https">Step 3: Enable HTTPS</h4>
+<p>Netlify automatically provisions SSL certificates through Let's Encrypt:</p>
+<ol>
+<li>Wait for DNS propagation (up to 24 hours)</li>
+<li>SSL certificate will be automatically issued</li>
+<li>Force HTTPS redirect in <strong>Site Settings</strong> → <strong>HTTPS</strong></li>
+</ol>
+<h4 id="step-4-configure-_redirects-optional">Step 4: Configure _redirects (Optional)</h4>
+<p>Create a <code>_redirects</code> file in your <code>public/</code> directory:</p>
+<div class="codehilite"><pre><span></span># public/_redirects
+
+# Force HTTPS
+http://docs.yourcompany.com/* https://docs.yourcompany.com/:splat 301!
+
+# Redirect old paths
+/old-docs/* /new-docs/:splat 301
+/v1/* /latest/:splat 301
+
+# SPA fallback
+/*  /index.html  200
+</pre></div>
+
+<h3 id="vercel-configuration">Vercel Configuration</h3>
+<h4 id="step-1-add-domain-in-vercel">Step 1: Add Domain in Vercel</h4>
+<ol>
+<li>Go to your project dashboard</li>
+<li>Navigate to <strong>Settings</strong> → <strong>Domains</strong></li>
+<li>Enter your custom domain</li>
+<li>Choose the deployment branch</li>
+</ol>
+<h4 id="step-2-configure-dns">Step 2: Configure DNS</h4>
+<p>For subdomains, add a CNAME record:</p>
+<div class="codehilite"><pre><span></span>Type: CNAME
+Name: docs
+Value: cname.vercel-dns.com
+</pre></div>
+
+<p>For root domains, add A records:</p>
+<div class="codehilite"><pre><span></span>Type: A
+Name: @
+Value: 76.76.19.61
+
+Type: A  
+Name: @
+Value: 76.76.19.62
+</pre></div>
+
+<h4 id="step-3-verify-domain">Step 3: Verify Domain</h4>
+<p>Vercel will automatically verify your domain and issue SSL certificates.</p>
+<h4 id="step-4-configure-verceljson">Step 4: Configure vercel.json</h4>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"redirects"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/old-path"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"destination"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/new-path"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"permanent"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"headers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/(.*)"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"headers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"X-Content-Type-Options"</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"nosniff"</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"X-Frame-Options"</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DENY"</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"X-XSS-Protection"</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1; mode=block"</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3 id="github-pages-configuration">GitHub Pages Configuration</h3>
+<h4 id="step-1-configure-repository-settings">Step 1: Configure Repository Settings</h4>
+<ol>
+<li>Go to repository <strong>Settings</strong> → <strong>Pages</strong></li>
+<li>Select source (usually <code>main</code> branch)</li>
+<li>Add custom domain in the <strong>Custom domain</strong> field</li>
+</ol>
+<h4 id="step-2-create-cname-file">Step 2: Create CNAME File</h4>
+<p>Create a <code>CNAME</code> file in your repository root or <code>public/</code> directory:</p>
+<div class="codehilite"><pre><span></span>docs.yourcompany.com
+</pre></div>
+
+<h4 id="step-3-configure-dns">Step 3: Configure DNS</h4>
+<p>Add a CNAME record pointing to GitHub Pages:</p>
+<div class="codehilite"><pre><span></span>Type: CNAME
+Name: docs
+Value: yourusername.github.io
+</pre></div>
+
+<h4 id="step-4-enable-https">Step 4: Enable HTTPS</h4>
+<p>GitHub Pages automatically provides SSL certificates for custom domains.</p>
+<h3 id="firebase-hosting-configuration">Firebase Hosting Configuration</h3>
+<h4 id="step-1-configure-firebasejson">Step 1: Configure firebase.json</h4>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"hosting"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"public"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dist"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"site"</span><span class="p">:</span><span class="w"> </span><span class="s2">"your-project-id"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"cleanUrls"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"trailingSlash"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"rewrites"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"**"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"destination"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/index.html"</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">"headers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"**/*.@(jpg|jpeg|gif|png|svg|webp|js|css)"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"headers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cache-Control"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"max-age=31536000"</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h4 id="step-2-add-custom-domain">Step 2: Add Custom Domain</h4>
+<div class="codehilite"><pre><span></span>firebase<span class="w"> </span>hosting:channel:deploy<span class="w"> </span>live<span class="w"> </span>--only<span class="w"> </span>hosting
+firebase<span class="w"> </span>hosting:site:get<span class="w"> </span>your-project-id
+</pre></div>
+
+<p>Add domain in Firebase Console:
+1. Go to <strong>Hosting</strong> section
+2. Click <strong>Add custom domain</strong>
+3. Follow the verification steps</p>
+<h4 id="step-3-dns-configuration">Step 3: DNS Configuration</h4>
+<p>Add the provided DNS records from Firebase Console.</p>
+<h2 id="dns-provider-examples">DNS Provider Examples</h2>
+<h3 id="cloudflare-dns">Cloudflare DNS</h3>
+<div class="codehilite"><pre><span></span>Type: CNAME
+Name: docs
+Content: your-site.netlify.app
+Proxy status: Proxied (orange cloud)
+TTL: Auto
+</pre></div>
+
+<p>Additional Cloudflare settings:
+- <strong>SSL/TLS</strong>: Full (strict)
+- <strong>Always Use HTTPS</strong>: On
+- <strong>Automatic HTTPS Rewrites</strong>: On</p>
+<h3 id="google-domains">Google Domains</h3>
+<div class="codehilite"><pre><span></span>Type: CNAME
+Name: docs
+Data: your-site.netlify.app.
+TTL: 1 hour
+</pre></div>
+
+<h3 id="namecheap-dns">Namecheap DNS</h3>
+<div class="codehilite"><pre><span></span>Type: CNAME Record
+Host: docs  
+Value: your-site.netlify.app
+TTL: Automatic
+</pre></div>
+
+<h3 id="route-53-aws">Route 53 (AWS)</h3>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"Type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CNAME"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"docs.yourcompany.com"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"Value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"your-site.netlify.app"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"TTL"</span><span class="p">:</span><span class="w"> </span><span class="mi">300</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2 id="ssl-certificate-configuration">SSL Certificate Configuration</h2>
+<h3 id="automatic-ssl-recommended">Automatic SSL (Recommended)</h3>
+<p>Most modern hosting platforms provide automatic SSL:</p>
+<ul>
+<li><strong>Netlify</strong>: Let's Encrypt (automatic)</li>
+<li><strong>Vercel</strong>: Automatic SSL provisioning</li>
+<li><strong>GitHub Pages</strong>: Automatic for custom domains</li>
+<li><strong>Firebase</strong>: Google-managed certificates</li>
+</ul>
+<h3 id="manual-ssl-configuration">Manual SSL Configuration</h3>
+<p>For advanced setups, you might need manual SSL configuration:</p>
+<div class="codehilite"><pre><span></span><span class="k">server</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">443</span><span class="w"> </span><span class="s">ssl</span><span class="w"> </span><span class="s">http2</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">docs.yourcompany.com</span><span class="p">;</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="kn">ssl_certificate</span><span class="w"> </span><span class="s">/path/to/certificate.crt</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">ssl_certificate_key</span><span class="w"> </span><span class="s">/path/to/private.key</span><span class="p">;</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="kn">ssl_protocols</span><span class="w"> </span><span class="s">TLSv1.2</span><span class="w"> </span><span class="s">TLSv1.3</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">ssl_ciphers</span><span class="w"> </span><span class="s">ECDHE-RSA-AES256-GCM-SHA512:DHE-RSA-AES256-GCM-SHA512</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">ssl_prefer_server_ciphers</span><span class="w"> </span><span class="no">off</span><span class="p">;</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://localhost:3000</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Host</span><span class="w"> </span><span class="nv">$host</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Real-IP</span><span class="w"> </span><span class="nv">$remote_addr</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2 id="advanced-configuration">Advanced Configuration</h2>
+<h3 id="multiple-domains">Multiple Domains</h3>
+<p>Configure multiple domains for the same site:</p>
+<div class="codehilite"><pre><span></span><span class="c1">// netlify.toml</span>
+<span class="p">[[</span><span class="err">redirec</span><span class="kc">ts</span><span class="p">]]</span>
+<span class="w">  </span><span class="kc">fr</span><span class="err">om</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="s2">"https://old-docs.com/*"</span>
+<span class="w">  </span><span class="kc">t</span><span class="err">o</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="s2">"https://docs.yourcompany.com/:splat"</span>
+<span class="w">  </span><span class="err">s</span><span class="kc">tatus</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">301</span>
+<span class="w">  </span><span class="kc">f</span><span class="err">orce</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="kc">true</span>
+
+<span class="p">[[</span><span class="err">redirec</span><span class="kc">ts</span><span class="p">]]</span>
+<span class="w">  </span><span class="kc">fr</span><span class="err">om</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="s2">"https://help.yourcompany.com/*"</span>
+<span class="w">  </span><span class="kc">t</span><span class="err">o</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="s2">"https://docs.yourcompany.com/:splat"</span>
+<span class="w">  </span><span class="err">s</span><span class="kc">tatus</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">301</span>
+<span class="w">  </span><span class="kc">f</span><span class="err">orce</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="kc">true</span>
+</pre></div>
+
+<h3 id="internationalization-domains">Internationalization Domains</h3>
+<p>Set up different domains for different languages:</p>
+<div class="codehilite"><pre><span></span>docs.yourcompany.com (English)
+docs-de.yourcompany.com (German)
+docs-fr.yourcompany.com (French)
+docs-es.yourcompany.com (Spanish)
+</pre></div>
+
+<h3 id="cdn-integration">CDN Integration</h3>
+<p>Configure CDN for better performance:</p>
+<div class="codehilite"><pre><span></span><span class="c1">// vercel.json</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="nt">"functions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"app/api/**/*.js"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"maxDuration"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"regions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"iad1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"sfo1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"fra1"</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"github"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2 id="security-best-practices">Security Best Practices</h2>
+<h3 id="hsts-configuration">HSTS Configuration</h3>
+<p>Enable HTTP Strict Transport Security:</p>
+<div class="codehilite"><pre><span></span>Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+</pre></div>
+
+<h3 id="content-security-policy">Content Security Policy</h3>
+<div class="codehilite"><pre><span></span>Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; media-src 'self'; object-src 'none'; child-src 'self'; frame-ancestors 'none'; form-action 'self'; base-uri 'self';
+</pre></div>
+
+<h3 id="additional-security-headers">Additional Security Headers</h3>
+<div class="codehilite"><pre><span></span>X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: geolocation=(), microphone=(), camera=()
+</pre></div>
+
+<h2 id="performance-optimization">Performance Optimization</h2>
+<h3 id="dns-optimization">DNS Optimization</h3>
+<ol>
+<li><strong>Use fast DNS providers</strong>: Cloudflare, Route 53, or Google DNS</li>
+<li><strong>Minimize DNS lookups</strong>: Reduce external resource dependencies</li>
+<li><strong>Enable DNS prefetching</strong>: <code>&lt;link rel="dns-prefetch" href="#"&gt;</code></li>
+</ol>
+<h3 id="caching-strategy">Caching Strategy</h3>
+<div class="codehilite"><pre><span></span># Static assets
+Cache-Control: public, max-age=31536000, immutable
+
+# HTML files
+Cache-Control: public, max-age=0, must-revalidate
+
+# API responses
+Cache-Control: public, max-age=300, s-maxage=600
+</pre></div>
+
+<h2 id="monitoring-and-analytics">Monitoring and Analytics</h2>
+<h3 id="domain-health-monitoring">Domain Health Monitoring</h3>
+<p>Set up monitoring for your custom domain:</p>
+<div class="codehilite"><pre><span></span><span class="c1">// Basic uptime monitoring</span>
+<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">checkDomainHealth</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">'https://docs.yourcompany.com/health'</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">ok</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Domain is healthy'</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">'Domain health check failed'</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">'Domain is unreachable:'</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">setInterval</span><span class="p">(</span><span class="nx">checkDomainHealth</span><span class="p">,</span><span class="w"> </span><span class="mf">300000</span><span class="p">);</span><span class="w"> </span><span class="c1">// Check every 5 minutes</span>
+</pre></div>
+
+<h3 id="analytics-configuration">Analytics Configuration</h3>
+<div class="codehilite"><pre><span></span><span class="cm">&lt;!-- Google Analytics --&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">async</span> <span class="na">src</span><span class="o">=</span><span class="s">"https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="nb">window</span><span class="p">.</span><span class="nx">dataLayer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">dataLayer</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">[];</span>
+<span class="w">  </span><span class="kd">function</span><span class="w"> </span><span class="nx">gtag</span><span class="p">(){</span><span class="nx">dataLayer</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nb">arguments</span><span class="p">);}</span>
+<span class="w">  </span><span class="nx">gtag</span><span class="p">(</span><span class="s1">'js'</span><span class="p">,</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Date</span><span class="p">());</span>
+<span class="w">  </span><span class="nx">gtag</span><span class="p">(</span><span class="s1">'config'</span><span class="p">,</span><span class="w"> </span><span class="s1">'GA_TRACKING_ID'</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">custom_map</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="s1">'custom_parameter'</span><span class="o">:</span><span class="w"> </span><span class="s1">'dimension1'</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">});</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="common-issues">Common Issues</h3>
+<h4 id="dns-propagation-delays">DNS Propagation Delays</h4>
+<p>DNS changes can take up to 48 hours to fully propagate worldwide:</p>
+<div class="codehilite"><pre><span></span><span class="c1"># Check DNS propagation</span>
+dig<span class="w"> </span>docs.yourcompany.com
+nslookup<span class="w"> </span>docs.yourcompany.com
+</pre></div>
+
+<p>Online tools:
+- whatsmydns.net
+- dnschecker.org</p>
+<h4 id="ssl-certificate-issues">SSL Certificate Issues</h4>
+<p>Common SSL problems and solutions:</p>
+<ol>
+<li><strong>Mixed content errors</strong>: Ensure all resources use HTTPS</li>
+<li><strong>Certificate mismatch</strong>: Verify domain names match certificate</li>
+<li><strong>Expired certificates</strong>: Set up auto-renewal</li>
+</ol>
+<h4 id="redirect-loops">Redirect Loops</h4>
+<p>Prevent infinite redirects:</p>
+<div class="codehilite"><pre><span></span># Incorrect
+https://docs.yourcompany.com → https://docs.yourcompany.com
+
+# Correct  
+http://docs.yourcompany.com → https://docs.yourcompany.com
+</pre></div>
+
+<h4 id="performance-issues">Performance Issues</h4>
+<p>Diagnose and fix performance problems:</p>
+<div class="codehilite"><pre><span></span><span class="c1"># Test site speed</span>
+curl<span class="w"> </span>-w<span class="w"> </span><span class="s2">"@curl-format.txt"</span><span class="w"> </span>-o<span class="w"> </span>/dev/null<span class="w"> </span>-s<span class="w"> </span><span class="s2">"https://docs.yourcompany.com"</span>
+
+<span class="c1"># Check response headers</span>
+curl<span class="w"> </span>-I<span class="w"> </span><span class="s2">"https://docs.yourcompany.com"</span>
+</pre></div>
+
+<h3 id="debug-tools">Debug Tools</h3>
+<h4 id="dns-debugging">DNS Debugging</h4>
+<div class="codehilite"><pre><span></span><span class="c1"># Check A records</span>
+dig<span class="w"> </span>A<span class="w"> </span>docs.yourcompany.com
+
+<span class="c1"># Check CNAME records  </span>
+dig<span class="w"> </span>CNAME<span class="w"> </span>docs.yourcompany.com
+
+<span class="c1"># Check MX records</span>
+dig<span class="w"> </span>MX<span class="w"> </span>yourcompany.com
+
+<span class="c1"># Trace DNS resolution</span>
+dig<span class="w"> </span>+trace<span class="w"> </span>docs.yourcompany.com
+</pre></div>
+
+<h4 id="ssl-debugging">SSL Debugging</h4>
+<div class="codehilite"><pre><span></span><span class="c1"># Check SSL certificate</span>
+openssl<span class="w"> </span>s_client<span class="w"> </span>-connect<span class="w"> </span>docs.yourcompany.com:443<span class="w"> </span>-servername<span class="w"> </span>docs.yourcompany.com
+
+<span class="c1"># Test SSL configuration</span>
+curl<span class="w"> </span>-vI<span class="w"> </span>https://docs.yourcompany.com
+</pre></div>
+
+<h2 id="migration-strategies">Migration Strategies</h2>
+<h3 id="zero-downtime-migration">Zero-Downtime Migration</h3>
+<p>Plan for seamless domain migration:</p>
+<ol>
+<li><strong>Prepare new domain</strong>: Set up and test thoroughly</li>
+<li><strong>Update DNS with low TTL</strong>: Reduce propagation time</li>
+<li><strong>Monitor traffic</strong>: Watch for any issues</li>
+<li><strong>Implement redirects</strong>: Guide users to new domain</li>
+<li><strong>Update internal links</strong>: Change all references</li>
+<li><strong>Notify users</strong>: Communicate the change</li>
+</ol>
+<h3 id="migration-checklist">Migration Checklist</h3>
+<ul>
+<li>[ ] Domain ownership verified</li>
+<li>[ ] DNS records configured</li>
+<li>[ ] SSL certificate active</li>
+<li>[ ] Redirects implemented</li>
+<li>[ ] Internal links updated</li>
+<li>[ ] External references notified</li>
+<li>[ ] Analytics tracking updated</li>
+<li>[ ] SEO considerations addressed</li>
+<li>[ ] Monitoring alerts configured</li>
+<li>[ ] Rollback plan prepared</li>
+</ul>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li><strong>Choose meaningful subdomains</strong>: Use clear, descriptive names</li>
+<li><strong>Enable HTTPS everywhere</strong>: Never serve content over HTTP</li>
+<li><strong>Monitor domain health</strong>: Set up uptime monitoring</li>
+<li><strong>Plan for disasters</strong>: Have backup domains ready</li>
+<li><strong>Document your setup</strong>: Keep configuration records</li>
+<li><strong>Regular maintenance</strong>: Review and update configurations</li>
+<li><strong>Security first</strong>: Implement proper headers and policies</li>
+<li><strong>Performance matters</strong>: Optimize for speed and reliability</li>
+</ol>
+<h2 id="conclusion">Conclusion</h2>
+<p>Setting up a custom domain for your Dockit documentation site enhances your brand presence and provides a professional experience for your users. Follow the platform-specific instructions, implement proper security measures, and monitor your domain's health for the best results.</p>
+<p>Remember to test thoroughly in a staging environment before making changes to production domains, and always have a rollback plan ready in case of issues.</p>
+        </article>
+        <nav class="docs-pagination" aria-label="Pagination"><a class="page-link prev" href="github.html"><small>← Previous page</small><span>GitHub Integration</span></a></nav>
+      </div>
+
+    <!-- Troisième colonne : table des matières + scrollspy (js/docs.js) -->
+    <aside class="docs-toc">
+      <h2 class="toc-title">On this page</h2>
+      <nav class="toc-list" id="toc-list"><a class="toc-h2" href="#overview">Overview</a><a class="toc-h2" href="#prerequisites">Prerequisites</a><a class="toc-h2" href="#domain-configuration-options">Domain Configuration Options</a><a class="toc-h3" href="#subdomain-setup-recommended">Subdomain Setup (Recommended)</a><a class="toc-h3" href="#root-domain-setup">Root Domain Setup</a><a class="toc-h3" href="#path-based-setup">Path-based Setup</a><a class="toc-h2" href="#platform-specific-setup">Platform-Specific Setup</a><a class="toc-h3" href="#netlify-configuration">Netlify Configuration</a><a class="toc-h3" href="#vercel-configuration">Vercel Configuration</a><a class="toc-h3" href="#github-pages-configuration">GitHub Pages Configuration</a><a class="toc-h3" href="#firebase-hosting-configuration">Firebase Hosting Configuration</a><a class="toc-h2" href="#dns-provider-examples">DNS Provider Examples</a><a class="toc-h3" href="#cloudflare-dns">Cloudflare DNS</a><a class="toc-h3" href="#google-domains">Google Domains</a><a class="toc-h3" href="#namecheap-dns">Namecheap DNS</a><a class="toc-h3" href="#route-53-aws">Route 53 (AWS)</a><a class="toc-h2" href="#ssl-certificate-configuration">SSL Certificate Configuration</a><a class="toc-h3" href="#automatic-ssl-recommended">Automatic SSL (Recommended)</a><a class="toc-h3" href="#manual-ssl-configuration">Manual SSL Configuration</a><a class="toc-h2" href="#advanced-configuration">Advanced Configuration</a><a class="toc-h3" href="#multiple-domains">Multiple Domains</a><a class="toc-h3" href="#internationalization-domains">Internationalization Domains</a><a class="toc-h3" href="#cdn-integration">CDN Integration</a><a class="toc-h2" href="#security-best-practices">Security Best Practices</a><a class="toc-h3" href="#hsts-configuration">HSTS Configuration</a><a class="toc-h3" href="#content-security-policy">Content Security Policy</a><a class="toc-h3" href="#additional-security-headers">Additional Security Headers</a><a class="toc-h2" href="#performance-optimization">Performance Optimization</a><a class="toc-h3" href="#dns-optimization">DNS Optimization</a><a class="toc-h3" href="#caching-strategy">Caching Strategy</a><a class="toc-h2" href="#monitoring-and-analytics">Monitoring and Analytics</a><a class="toc-h3" href="#domain-health-monitoring">Domain Health Monitoring</a><a class="toc-h3" href="#analytics-configuration">Analytics Configuration</a><a class="toc-h2" href="#troubleshooting">Troubleshooting</a><a class="toc-h3" href="#common-issues">Common Issues</a><a class="toc-h3" href="#debug-tools">Debug Tools</a><a class="toc-h2" href="#migration-strategies">Migration Strategies</a><a class="toc-h3" href="#zero-downtime-migration">Zero-Downtime Migration</a><a class="toc-h3" href="#migration-checklist">Migration Checklist</a><a class="toc-h2" href="#best-practices">Best Practices</a><a class="toc-h2" href="#conclusion">Conclusion</a></nav>
+    </aside>
+    </div>
+  </main>
+
+  <!-- Bouton flottant (mobile) : ouvre le tiroir de la sidebar -->
+  <button class="sidebar-open-btn" id="sidebar-open-btn" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16"/><path d="M4 12h10"/><path d="M4 18h16"/></svg>
+    Contents
+  </button>
+  <div class="nav-backdrop" id="sidebar-backdrop"></div>
+
+  <!-- ==================== PIED DE PAGE ==================== -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-col"><h4>Join Our Community</h4><ul><li><a href="https://github.com/themefisher/dockit/discussions" target="_blank" rel="noopener">GitHub Discussions</a></li><li><a href="#">Discord Community</a></li><li><a href="#">Twitter Updates</a></li><li><a href="#">Contributing Guide</a></li></ul></div>
+      <div class="footer-col"><h4>Helpful Links</h4><ul><li><a href="../getting-started/introduction/overview.html">Getting Started</a></li><li><a href="../../privacy-policy.html">Privacy Policy</a></li><li><a href="../../terms-conditions.html">Terms and Conditions</a></li><li><a href="../../about.html">About Us</a></li><li><a href="../../404.html">Troubleshooting</a></li></ul></div>
+      <div class="footer-col"><h4>Resources</h4><ul><li><a href="../getting-started/introduction/overview.html">Documentation Hub</a></li><li><a href="#">Theme Gallery</a></li><li><a href="#">Best Practices</a></li><li><a href="#">Performance Tips</a></li><li><a href="#">Migration Guide</a></li></ul></div>
+      <div class="footer-col">
+        <h4>Connect With Us</h4>
+        <form class="mail-form" action="#" aria-label="Newsletter">
+          <input type="email" placeholder="Enter your email" required aria-label="Email">
+          <button type="submit" aria-label="OK">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21.0477 3.05293C18.8697 0.707361 2.48648 6.4532 2.50001 8.551C2.51535 10.9299 8.89809 11.6617 10.6672 12.1581C11.7311 12.4565 12.016 12.7625 12.2613 13.8781C13.3723 18.9305 13.9301 21.4435 15.2014 21.4996C17.2278 21.5892 23.1733 5.342 21.0477 3.05293Z" stroke="currentColor" stroke-width="1.5"/><path d="M11.5 12.5L15 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </form>
+        <p class="mail-form-feedback" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p class="copyright">Designed and Developed by <a href="https://themefisher.com" target="_blank" rel="noopener">Themefisher</a> Copyright © 2025.</p>
+      <div class="socials"><a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a><a href="https://slack.com/" target="_blank" rel="noopener" aria-label="Slack"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zm1.271 0a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zm0 1.271a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zm10.122 2.521a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zm-1.268 0a2.528 2.528 0 0 1-2.523 2.521 2.528 2.528 0 0 1-2.52-2.521V2.522A2.528 2.528 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zm-2.523 10.122a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.528 2.528 0 0 1-2.52-2.522v-2.522h2.52zm0-1.268a2.528 2.528 0 0 1-2.523-2.523 2.528 2.528 0 0 1 2.523-2.52h6.313A2.528 2.528 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/></svg></a><a href="https://www.github.com/" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a><a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a></div>
+    </div>
+  </footer>
+
+  <!-- ==================== MODALE DE RECHERCHE ==================== -->
+  <div class="search-modal" id="search-modal" hidden>
+    <div class="search-modal-backdrop" data-search-close></div>
+    <div class="search-modal-panel" role="dialog" aria-modal="true" aria-label="Search documentation">
+      <form class="search-form" role="search" onsubmit="return false;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input id="search-input" type="text" placeholder="Search documentation…" autocomplete="off" aria-label="Search documentation">
+        <kbd>Esc</kbd>
+      </form>
+      <div class="search-results" id="search-results"></div>
+      <div class="search-hint">
+        <span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span>
+        <span><kbd>↵</kbd> to open</span>
+        <span><kbd>Esc</kbd> to close</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts : l'index doit être chargé avant search.js -->
+  <script src="../../js/search-index.js"></script>
+  <script src="../../js/main.js"></script>
+  <script src="../../js/search.js"></script>
+  <script src="../../js/docs.js"></script>
+</body>
+</html>

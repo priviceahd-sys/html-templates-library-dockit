@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <!-- Page générée depuis src/content/docs/contents/components/using-components.md -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Using Components | DocKit</title>
+  <meta name="description" content="Learn how to use and customize components in your documentation.">
+  <link rel="icon" type="image/svg+xml" href="../../../assets/images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../css/layout.css">
+  <link rel="stylesheet" href="../../../css/components.css">
+  <link rel="stylesheet" href="../../../css/docs.css">
+  <script>
+    /* Anti-scintillement : applique le thème mémorisé avant le premier rendu */
+    (function () {
+      try {
+        var theme = localStorage.getItem("dockit-theme");
+        if (!theme) theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (e) { document.documentElement.setAttribute("data-theme", "dark"); }
+    })();
+  </script>
+</head>
+
+<body class="page-docs">
+
+  <!-- ==================== EN-TÊTE ==================== -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../../../index.html" aria-label="DocKit">
+        <img class="logo-dark" src="../../../assets/images/logo-dark.svg" alt="DocKit" width="127" height="32">
+        <img class="logo-light" src="../../../assets/images/logo-light.svg" alt="DocKit" width="127" height="32">
+      </a>
+
+      <nav class="main-nav" id="main-nav" aria-label="Documentation">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="../../../index.html">Home</a></li>
+          <li><a class="nav-link" href="../../getting-started/introduction/overview.html">Documentation</a></li>
+          <li class="has-dropdown">
+            <button class="nav-link" aria-haspopup="true" aria-expanded="false">
+              Reference
+              <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="../../reference/configuration.html">Configuration</a></li>
+              <li><a href="../../reference/plugin.html">Plugins Reference</a></li>
+            </ul>
+          </li>
+          <li class="nav-cta-mobile"><a class="btn btn-primary" href="../../getting-started/introduction/overview.html">Get Started</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn" data-search-open aria-label="Search documentation">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <button class="icon-btn theme-toggle" id="theme-toggle" aria-label="Toggle dark / light theme">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        </button>
+        <div class="lang-switch" aria-label="Langue">
+          <a href="#" data-lang-link="en">EN</a>
+          <a href="#" data-lang-link="fr">FR</a>
+        </div>
+        <a class="btn btn-outline header-cta" href="../../getting-started/introduction/overview.html">Get Started</a>
+        <button class="icon-btn menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="nav-backdrop" id="nav-backdrop"></div>
+
+  <!-- ==================== CONTENU ==================== -->
+  <main>
+    <div class="container docs-layout">
+
+      <!-- Première colonne : sidebar de navigation (générée à partir
+           de la structure sidebar.json du thème Astro) -->
+      <aside class="docs-sidebar" id="docs-sidebar">
+        <nav aria-label="Documentation sidebar"><div class="sidebar-group collapsed"><button class="sidebar-group-title" aria-expanded="false">Getting Started<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul class="sidebar-links"><li class="sidebar-subgroup"><button class="sidebar-sub-title" aria-expanded="true">Introduction<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul><li><a class="sidebar-link" href="../../getting-started/introduction/overview.html">Overview</a></li><li><a class="sidebar-link" href="../../getting-started/introduction/quickstart.html">Quickstart</a></li></ul></li><li class="sidebar-subgroup"><button class="sidebar-sub-title" aria-expanded="true">Global Settings<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul><li><a class="sidebar-link" href="../../getting-started/global-settings/configuration.html">Global Configuration</a></li></ul></li><li><a class="sidebar-link" href="../../getting-started/navigation.html">Introduction to DocKit</a></li></ul></div><div class="sidebar-group"><button class="sidebar-group-title" aria-expanded="true">Content<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul class="sidebar-links"><li class="sidebar-subgroup"><button class="sidebar-sub-title" aria-expanded="true">Components and Block<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul><li><a class="sidebar-link active" href="using-components.html">Using Components</a></li><li><a class="sidebar-link" href="list-card.html">ListCard Component</a></li><li><a class="sidebar-link" href="grid.html">Grid Component</a></li><li><a class="sidebar-link" href="accordion.html">Accordion Component</a></li><li class="sidebar-subgroup"><button class="sidebar-sub-title" aria-expanded="true">Child Components<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul><li><a class="sidebar-link" href="child-components/new-card.html">NewCard Component</a></li><li class="sidebar-subgroup"><button class="sidebar-sub-title" aria-expanded="true">More Child<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul><li><a class="sidebar-link" href="child-components/more-child/button.html">Button Component</a></li></ul></li></ul></li></ul></li><li class="sidebar-subgroup"><button class="sidebar-sub-title" aria-expanded="true">Editing Content<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul><li><a class="sidebar-link" href="../editing/add-new-doc.html">Adding Document</a></li></ul></li></ul></div><div class="sidebar-group collapsed"><button class="sidebar-group-title" aria-expanded="false">Reference<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul class="sidebar-links"><li><a class="sidebar-link" href="../../reference/configuration.html">Configuration</a></li><li><a class="sidebar-link" href="../../reference/plugin.html">Plugins Reference</a></li></ul></div><div class="sidebar-group collapsed"><button class="sidebar-group-title" aria-expanded="false">Configurations<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul class="sidebar-links"><li><a class="sidebar-link" href="../../configurations/custom-css-js.html">Custom CSS & JavaScript</a></li><li><a class="sidebar-link" href="../../configurations/github.html">GitHub Integration</a></li><li><a class="sidebar-link" href="../../configurations/custom-domain.html">Custom Domain Setup</a></li></ul></div></nav>
+      </aside>
+
+      <!-- Deuxième colonne : l'article lui-même -->
+      <div class="docs-main">
+        <article class="docs-content prose">
+          <h1>Using Components</h1>
+          <p class="docs-description">Learn how to use and customize components in your documentation.</p>
+<p>Dockit provides multiple component options for building rich, interactive documentation. You have access to both Astro Starlight's built-in components and a collection of custom premade components.</p>
+<h2 id="astro-starlight-components">Astro Starlight Components</h2>
+<p>You can use all the powerful components that come with Astro Starlight framework. These include cards, badges, code blocks, tabs, and many other useful documentation elements.</p>
+<p>For complete documentation and usage examples of all available Starlight components, visit:
+<strong><a href="https://starlight.astro.build/components/using-components/">https://starlight.astro.build/components/using-components/</a></strong></p>
+<h2 id="dockit-premade-components">Dockit Premade Components</h2>
+<p>In addition to Starlight components, Dockit includes a collection of custom-built components designed specifically for documentation needs. All these components are located in the <code>user-components</code> folder.</p>
+<h3 id="available-custom-components">Available Custom Components</h3>
+<p>The following premade components are available for use in your documentation:</p>
+<ul>
+<li><strong><a href="accordion.html">Accordion</a></strong> - Collapsible content sections for organizing information</li>
+<li><strong><a href="#">Button</a></strong> - Customizable button elements with various styles</li>
+<li><strong><a href="grid.html">Grid</a></strong> - Flexible grid layout system for organizing content</li>
+<li><strong><a href="list-card.html">ListCard</a></strong> - Card-based lists for showcasing features or items</li>
+<li><strong><a href="#">NewCard</a></strong> - Enhanced card component with modern styling</li>
+</ul>
+<p>Each component has its own detailed documentation page with usage examples, props, and best practices.</p>
+<h2 id="component-location">Component Location</h2>
+<p>All custom components are organized in the following structure:</p>
+<div class="codehilite"><pre><span></span>src/
+  components/
+    user-components/     ← Main custom components
+      ├── Accordion.astro
+      ├── Button.astro
+      ├── Grid.astro
+      ├── ListCard.astro
+      └── NewCard.astro
+</pre></div>
+
+<h2 id="getting-started">Getting Started</h2>
+<ul>
+<li><strong>For Starlight components</strong>: Refer to the official Starlight documentation linked above</li>
+<li><strong>For custom components</strong>: Each component in the <code>user-components</code> folder can be imported and used directly in your MDX files</li>
+<li><strong>Component customization</strong>: All components can be modified to fit your specific design needs</li>
+</ul>
+<p>Choose the components that best fit your documentation requirements and create engaging, interactive content for your users.</p>
+        </article>
+        <nav class="docs-pagination" aria-label="Pagination"><a class="page-link prev" href="../../getting-started/navigation.html"><small>← Previous page</small><span>Introduction to DocKit</span></a><a class="page-link next" href="list-card.html"><small>Next page →</small><span>ListCard Component</span></a></nav>
+      </div>
+
+    <!-- Troisième colonne : table des matières + scrollspy (js/docs.js) -->
+    <aside class="docs-toc">
+      <h2 class="toc-title">On this page</h2>
+      <nav class="toc-list" id="toc-list"><a class="toc-h2" href="#astro-starlight-components">Astro Starlight Components</a><a class="toc-h2" href="#dockit-premade-components">Dockit Premade Components</a><a class="toc-h3" href="#available-custom-components">Available Custom Components</a><a class="toc-h2" href="#component-location">Component Location</a><a class="toc-h2" href="#getting-started">Getting Started</a></nav>
+    </aside>
+    </div>
+  </main>
+
+  <!-- Bouton flottant (mobile) : ouvre le tiroir de la sidebar -->
+  <button class="sidebar-open-btn" id="sidebar-open-btn" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16"/><path d="M4 12h10"/><path d="M4 18h16"/></svg>
+    Contents
+  </button>
+  <div class="nav-backdrop" id="sidebar-backdrop"></div>
+
+  <!-- ==================== PIED DE PAGE ==================== -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-col"><h4>Join Our Community</h4><ul><li><a href="https://github.com/themefisher/dockit/discussions" target="_blank" rel="noopener">GitHub Discussions</a></li><li><a href="#">Discord Community</a></li><li><a href="#">Twitter Updates</a></li><li><a href="#">Contributing Guide</a></li></ul></div>
+      <div class="footer-col"><h4>Helpful Links</h4><ul><li><a href="../../getting-started/introduction/overview.html">Getting Started</a></li><li><a href="../../../privacy-policy.html">Privacy Policy</a></li><li><a href="../../../terms-conditions.html">Terms and Conditions</a></li><li><a href="../../../about.html">About Us</a></li><li><a href="../../../404.html">Troubleshooting</a></li></ul></div>
+      <div class="footer-col"><h4>Resources</h4><ul><li><a href="../../getting-started/introduction/overview.html">Documentation Hub</a></li><li><a href="#">Theme Gallery</a></li><li><a href="#">Best Practices</a></li><li><a href="#">Performance Tips</a></li><li><a href="#">Migration Guide</a></li></ul></div>
+      <div class="footer-col">
+        <h4>Connect With Us</h4>
+        <form class="mail-form" action="#" aria-label="Newsletter">
+          <input type="email" placeholder="Enter your email" required aria-label="Email">
+          <button type="submit" aria-label="OK">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21.0477 3.05293C18.8697 0.707361 2.48648 6.4532 2.50001 8.551C2.51535 10.9299 8.89809 11.6617 10.6672 12.1581C11.7311 12.4565 12.016 12.7625 12.2613 13.8781C13.3723 18.9305 13.9301 21.4435 15.2014 21.4996C17.2278 21.5892 23.1733 5.342 21.0477 3.05293Z" stroke="currentColor" stroke-width="1.5"/><path d="M11.5 12.5L15 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </form>
+        <p class="mail-form-feedback" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p class="copyright">Designed and Developed by <a href="https://themefisher.com" target="_blank" rel="noopener">Themefisher</a> Copyright © 2025.</p>
+      <div class="socials"><a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a><a href="https://slack.com/" target="_blank" rel="noopener" aria-label="Slack"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zm1.271 0a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zm0 1.271a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zm10.122 2.521a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zm-1.268 0a2.528 2.528 0 0 1-2.523 2.521 2.528 2.528 0 0 1-2.52-2.521V2.522A2.528 2.528 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zm-2.523 10.122a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.528 2.528 0 0 1-2.52-2.522v-2.522h2.52zm0-1.268a2.528 2.528 0 0 1-2.523-2.523 2.528 2.528 0 0 1 2.523-2.52h6.313A2.528 2.528 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/></svg></a><a href="https://www.github.com/" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a><a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a></div>
+    </div>
+  </footer>
+
+  <!-- ==================== MODALE DE RECHERCHE ==================== -->
+  <div class="search-modal" id="search-modal" hidden>
+    <div class="search-modal-backdrop" data-search-close></div>
+    <div class="search-modal-panel" role="dialog" aria-modal="true" aria-label="Search documentation">
+      <form class="search-form" role="search" onsubmit="return false;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input id="search-input" type="text" placeholder="Search documentation…" autocomplete="off" aria-label="Search documentation">
+        <kbd>Esc</kbd>
+      </form>
+      <div class="search-results" id="search-results"></div>
+      <div class="search-hint">
+        <span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span>
+        <span><kbd>↵</kbd> to open</span>
+        <span><kbd>Esc</kbd> to close</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts : l'index doit être chargé avant search.js -->
+  <script src="../../../js/search-index.js"></script>
+  <script src="../../../js/main.js"></script>
+  <script src="../../../js/search.js"></script>
+  <script src="../../../js/docs.js"></script>
+</body>
+</html>

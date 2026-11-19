@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+  <!-- Page générée depuis src/content/docs/fr/configurations/custom-domain.md -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configurer un domaine personnalisé | DocKit</title>
+  <meta name="description" content="Apprenez à configurer un domaine personnalisé pour votre site de documentation Dockit avec des instructions détaillées pour différentes plateformes d'hébergement.">
+  <link rel="icon" type="image/svg+xml" href="../../../assets/images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../css/layout.css">
+  <link rel="stylesheet" href="../../../css/components.css">
+  <link rel="stylesheet" href="../../../css/docs.css">
+  <script>
+    /* Anti-scintillement : applique le thème mémorisé avant le premier rendu */
+    (function () {
+      try {
+        var theme = localStorage.getItem("dockit-theme");
+        if (!theme) theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (e) { document.documentElement.setAttribute("data-theme", "dark"); }
+    })();
+  </script>
+</head>
+
+<body class="page-docs">
+
+  <!-- ==================== EN-TÊTE ==================== -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../../index.html" aria-label="DocKit">
+        <img class="logo-dark" src="../../../assets/images/logo-dark.svg" alt="DocKit" width="127" height="32">
+        <img class="logo-light" src="../../../assets/images/logo-light.svg" alt="DocKit" width="127" height="32">
+      </a>
+
+      <nav class="main-nav" id="main-nav" aria-label="Documentation">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="../../index.html">Accueil</a></li>
+          <li><a class="nav-link" href="../getting-started/introduction/overview.html">Documentation</a></li>
+          <li class="has-dropdown">
+            <button class="nav-link" aria-haspopup="true" aria-expanded="false">
+              Référence
+              <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="../reference/configuration.html">Configuration</a></li>
+              <li><a href="../reference/plugin.html">Référence des plugins</a></li>
+            </ul>
+          </li>
+          <li class="nav-cta-mobile"><a class="btn btn-primary" href="../getting-started/introduction/overview.html">Commencer</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn" data-search-open aria-label="Rechercher dans la documentation">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <button class="icon-btn theme-toggle" id="theme-toggle" aria-label="Basculer le thème sombre / clair">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        </button>
+        <div class="lang-switch" aria-label="Langue">
+          <a href="#" data-lang-link="en">EN</a>
+          <a href="#" data-lang-link="fr">FR</a>
+        </div>
+        <a class="btn btn-outline header-cta" href="../getting-started/introduction/overview.html">Commencer</a>
+        <button class="icon-btn menu-toggle" id="menu-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="nav-backdrop" id="nav-backdrop"></div>
+
+  <!-- ==================== CONTENU ==================== -->
+  <main>
+    <div class="container docs-layout">
+
+      <!-- Première colonne : sidebar de navigation (générée à partir
+           de la structure sidebar.json du thème Astro) -->
+      <aside class="docs-sidebar" id="docs-sidebar">
+        <nav aria-label="Documentation sidebar"><div class="sidebar-group collapsed"><button class="sidebar-group-title" aria-expanded="false">Commencer<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul class="sidebar-links"><li class="sidebar-subgroup"><button class="sidebar-sub-title" aria-expanded="true">Introduction<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul><li><a class="sidebar-link" href="../getting-started/introduction/overview.html">Aperçu</a></li><li><a class="sidebar-link" href="../getting-started/introduction/quickstart.html">Démarrage rapide</a></li></ul></li><li class="sidebar-subgroup"><button class="sidebar-sub-title" aria-expanded="true">Paramètres globaux<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul><li><a class="sidebar-link" href="../getting-started/global-settings/configuration.html">Configuration globale</a></li></ul></li><li><a class="sidebar-link" href="../getting-started/navigation.html">Introduction à DocKit</a></li></ul></div><div class="sidebar-group collapsed"><button class="sidebar-group-title" aria-expanded="false">Contenu<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul class="sidebar-links"><li class="sidebar-subgroup"><button class="sidebar-sub-title" aria-expanded="true">Composants et blocs<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul><li><a class="sidebar-link" href="../contents/components/using-components.html">Utiliser les composants</a></li><li><a class="sidebar-link" href="../contents/components/list-card.html">Composant ListCard</a></li><li><a class="sidebar-link" href="../contents/components/grid.html">Composant Grid</a></li><li><a class="sidebar-link" href="../contents/components/accordion.html">Composant Accordion</a></li><li class="sidebar-subgroup"><button class="sidebar-sub-title" aria-expanded="true">Child Components<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul><li><a class="sidebar-link" href="../contents/components/child-components/new-card.html">Composant NewCard</a></li><li class="sidebar-subgroup"><button class="sidebar-sub-title" aria-expanded="true">More Child<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul><li><a class="sidebar-link" href="../contents/components/child-components/more-child/button.html">Composant Button</a></li></ul></li></ul></li></ul></li><li class="sidebar-subgroup"><button class="sidebar-sub-title" aria-expanded="true">Édition du contenu<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul><li><a class="sidebar-link" href="../contents/editing/add-new-doc.html">Ajouter un document</a></li></ul></li></ul></div><div class="sidebar-group collapsed"><button class="sidebar-group-title" aria-expanded="false">Référence<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul class="sidebar-links"><li><a class="sidebar-link" href="../reference/configuration.html">Configuration</a></li><li><a class="sidebar-link" href="../reference/plugin.html">Plugins</a></li></ul></div><div class="sidebar-group"><button class="sidebar-group-title" aria-expanded="true">Configurations<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul class="sidebar-links"><li><a class="sidebar-link" href="custom-css-js.html">CSS & JavaScript personnalisés</a></li><li><a class="sidebar-link" href="github.html">Intégration GitHub</a></li><li><a class="sidebar-link active" href="custom-domain.html">Configurer un domaine personnalisé</a></li></ul></div></nav>
+      </aside>
+
+      <!-- Deuxième colonne : l'article lui-même -->
+      <div class="docs-main">
+        <article class="docs-content prose">
+          <h1>Configurer un domaine personnalisé</h1>
+          <p class="docs-description">Apprenez à configurer un domaine personnalisé pour votre site de documentation Dockit avec des instructions détaillées pour différentes plateformes d'hébergement.</p>
+<p>La configuration d'un domaine personnalisé pour votre site de documentation Dockit aide à établir votre identité de marque et assure une apparence professionnelle. Ce guide couvre le processus complet de configuration de domaines personnalisés sur différentes plateformes d'hébergement.</p>
+<h2 id="apercu">Aperçu</h2>
+<p>Un domaine personnalisé vous permet de servir votre documentation depuis votre propre URL de marque au lieu du sous-domaine par défaut du fournisseur d'hébergement. Par exemple:</p>
+<ul>
+<li><strong>Par défaut</strong>: <code>your-docs.netlify.app</code> ou <code>your-docs.vercel.app</code></li>
+<li><strong>Personnalisé</strong>: <code>docs.votreentreprise.com</code> ou <code>help.votreentreprise.com</code></li>
+</ul>
+<h2 id="prerequis">Prérequis</h2>
+<p>Avant de configurer un domaine personnalisé, assurez-vous d'avoir:</p>
+<ol>
+<li><strong>Propriété du domaine</strong>: Vous possédez ou gérez le domaine que vous souhaitez utiliser</li>
+<li><strong>Accès DNS</strong>: Possibilité de modifier les enregistrements DNS pour votre domaine</li>
+<li><strong>Site déployé</strong>: Votre site Dockit est déjà déployé et fonctionne</li>
+<li><strong>Certificat SSL</strong>: Support HTTPS (généralement fourni automatiquement)</li>
+</ol>
+<h2 id="options-de-configuration-de-domaine">Options de configuration de domaine</h2>
+<h3 id="configuration-de-sous-domaine-recommande">Configuration de sous-domaine (Recommandé)</h3>
+<p>L'utilisation d'un sous-domaine est l'approche la plus courante et recommandée:</p>
+<div class="codehilite"><pre><span></span>docs.votreentreprise.com
+help.votreentreprise.com
+support.votreentreprise.com
+knowledge.votreentreprise.com
+</pre></div>
+
+<h3 id="configuration-de-domaine-racine">Configuration de domaine racine</h3>
+<p>Vous pouvez également utiliser votre domaine racine, bien que cela nécessite des considérations supplémentaires:</p>
+<div class="codehilite"><pre><span></span>votreentreprise.com
+votredocs.com
+</pre></div>
+
+<h3 id="configuration-basee-sur-le-chemin">Configuration basée sur le chemin</h3>
+<p>Servir la documentation depuis un chemin spécifique:</p>
+<div class="codehilite"><pre><span></span>votreentreprise.com/docs
+votreentreprise.com/help
+</pre></div>
+
+<h2 id="installation-specifique-a-la-plateforme">Installation spécifique à la plateforme</h2>
+<h3 id="configuration-netlify">Configuration Netlify</h3>
+<h4 id="etape-1-ajouter-un-domaine-personnalise-dans-netlify">Étape 1: Ajouter un domaine personnalisé dans Netlify</h4>
+<ol>
+<li>Accédez aux <strong>Site Settings</strong> de votre site dans le tableau de bord Netlify</li>
+<li>Naviguez vers <strong>Domain management</strong> → <strong>Custom domains</strong></li>
+<li>Cliquez sur <strong>Add custom domain</strong></li>
+<li>Entrez votre domaine (par ex. <code>docs.votreentreprise.com</code>)</li>
+</ol>
+<h4 id="etape-2-configurer-les-enregistrements-dns">Étape 2: Configurer les enregistrements DNS</h4>
+<p>Ajoutez un enregistrement CNAME chez votre fournisseur DNS:</p>
+<div class="codehilite"><pre><span></span>Type: CNAME
+Nom: docs (ou votre sous-domaine choisi)
+Valeur: your-site-name.netlify.app
+TTL: 3600 (ou Auto)
+</pre></div>
+
+<h4 id="etape-3-activer-https">Étape 3: Activer HTTPS</h4>
+<p>Netlify verstrekt automatisch SSL-certificaten via Let's Encrypt:</p>
+<ol>
+<li>Wacht op DNS-propagatie (tot 24 uur)</li>
+<li>SSL-certificaat wordt automatisch uitgegeven</li>
+<li>Forceer HTTPS-omleiding in <strong>Site Settings</strong> → <strong>HTTPS</strong></li>
+</ol>
+<h4 id="stap-4-_redirects-configureren-optioneel">Stap 4: _redirects configureren (Optioneel)</h4>
+<p>Maak een <code>_redirects</code> bestand in je <code>public/</code> directory:</p>
+<div class="codehilite"><pre><span></span># public/_redirects
+
+# Forceer HTTPS
+http://docs.jouwbedrijf.com/* https://docs.jouwbedrijf.com/:splat 301!
+
+# Omleiden oude paden
+/old-docs/* /new-docs/:splat 301
+/v1/* /latest/:splat 301
+
+# SPA fallback
+/*  /index.html  200
+</pre></div>
+
+<h3 id="vercel-configuratie">Vercel configuratie</h3>
+<h4 id="stap-1-domein-toevoegen-in-vercel">Stap 1: Domein toevoegen in Vercel</h4>
+<ol>
+<li>Ga naar je project dashboard</li>
+<li>Navigeer naar <strong>Settings</strong> → <strong>Domains</strong></li>
+<li>Voer je aangepaste domein in</li>
+<li>Kies de deployment branch</li>
+</ol>
+<h4 id="stap-2-dns-configureren">Stap 2: DNS configureren</h4>
+<p>Voor subdomeinen, voeg een CNAME-record toe:</p>
+<div class="codehilite"><pre><span></span>Type: CNAME
+Naam: docs
+Waarde: cname.vercel-dns.com
+</pre></div>
+
+<p>Voor root domeinen, voeg A-records toe:</p>
+<div class="codehilite"><pre><span></span>Type: A
+Naam: @
+Waarde: 76.76.19.61
+
+Type: A  
+Naam: @
+Waarde: 76.76.19.62
+</pre></div>
+
+<h4 id="stap-3-domein-verifieren">Stap 3: Domein verifiëren</h4>
+<p>Vercel zal automatisch je domein verifiëren en SSL-certificaten uitgeven.</p>
+<h4 id="stap-4-verceljson-configureren">Stap 4: vercel.json configureren</h4>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"redirects"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/old-path"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"destination"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/new-path"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"permanent"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"headers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/(.*)"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"headers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"X-Content-Type-Options"</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"nosniff"</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"X-Frame-Options"</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DENY"</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"X-XSS-Protection"</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1; mode=block"</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3 id="github-pages-configuratie">GitHub Pages configuratie</h3>
+<h4 id="stap-1-repository-instellingen-configureren">Stap 1: Repository-instellingen configureren</h4>
+<ol>
+<li>Ga naar repository <strong>Settings</strong> → <strong>Pages</strong></li>
+<li>Selecteer bron (meestal <code>main</code> branch)</li>
+<li>Voeg aangepast domein toe in het <strong>Custom domain</strong> veld</li>
+</ol>
+<h4 id="stap-2-cname-bestand-maken">Stap 2: CNAME bestand maken</h4>
+<p>Maak een <code>CNAME</code> bestand in je repository root of <code>public/</code> directory:</p>
+<div class="codehilite"><pre><span></span>docs.jouwbedrijf.com
+</pre></div>
+
+<h4 id="stap-3-dns-configureren">Stap 3: DNS configureren</h4>
+<p>Voeg een CNAME-record toe die wijst naar GitHub Pages:</p>
+<div class="codehilite"><pre><span></span>Type: CNAME
+Naam: docs
+Waarde: jouwgebruikersnaam.github.io
+</pre></div>
+
+<h4 id="stap-4-https-inschakelen">Stap 4: HTTPS inschakelen</h4>
+<p>GitHub Pages verstrekt automatisch SSL-certificaten voor aangepaste domeinen.</p>
+<h3 id="firebase-hosting-configuratie">Firebase Hosting configuratie</h3>
+<h4 id="stap-1-firebasejson-configureren">Stap 1: firebase.json configureren</h4>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"hosting"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"public"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dist"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"site"</span><span class="p">:</span><span class="w"> </span><span class="s2">"your-project-id"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"cleanUrls"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"trailingSlash"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"rewrites"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"**"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"destination"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/index.html"</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">"headers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"**/*.@(jpg|jpeg|gif|png|svg|webp|js|css)"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"headers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cache-Control"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"max-age=31536000"</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h4 id="stap-2-aangepast-domein-toevoegen">Stap 2: Aangepast domein toevoegen</h4>
+<div class="codehilite"><pre><span></span>firebase<span class="w"> </span>hosting:channel:deploy<span class="w"> </span>live<span class="w"> </span>--only<span class="w"> </span>hosting
+firebase<span class="w"> </span>hosting:site:get<span class="w"> </span>your-project-id
+</pre></div>
+
+<p>Voeg domein toe in Firebase Console:
+1. Ga naar <strong>Hosting</strong> sectie
+2. Klik op <strong>Add custom domain</strong>
+3. Volg de verificatiestappen</p>
+<h4 id="stap-3-dns-configuratie">Stap 3: DNS-configuratie</h4>
+<p>Voeg de verstrekte DNS-records toe uit Firebase Console.</p>
+<h2 id="dns-provider-voorbeelden">DNS Provider voorbeelden</h2>
+<h3 id="cloudflare-dns">Cloudflare DNS</h3>
+<div class="codehilite"><pre><span></span>Type: CNAME
+Naam: docs
+Content: your-site.netlify.app
+Proxy status: Proxied (oranje wolk)
+TTL: Auto
+</pre></div>
+
+<p>Aanvullende Cloudflare-instellingen:
+- <strong>SSL/TLS</strong>: Full (strict)
+- <strong>Always Use HTTPS</strong>: Aan
+- <strong>Automatic HTTPS Rewrites</strong>: Aan</p>
+<h3 id="google-domains">Google Domains</h3>
+<div class="codehilite"><pre><span></span>Type: CNAME
+Naam: docs
+Data: your-site.netlify.app.
+TTL: 1 uur
+</pre></div>
+
+<h3 id="namecheap-dns">Namecheap DNS</h3>
+<div class="codehilite"><pre><span></span>Type: CNAME Record
+Host: docs  
+Waarde: your-site.netlify.app
+TTL: Automatic
+</pre></div>
+
+<h3 id="route-53-aws">Route 53 (AWS)</h3>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"Type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CNAME"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"docs.jouwbedrijf.com"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"Value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"your-site.netlify.app"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"TTL"</span><span class="p">:</span><span class="w"> </span><span class="mi">300</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2 id="ssl-certificaat-configuratie">SSL-certificaat configuratie</h2>
+<h3 id="automatische-ssl-aanbevolen">Automatische SSL (Aanbevolen)</h3>
+<p>De meeste moderne hosting platforms bieden automatische SSL:</p>
+<ul>
+<li><strong>Netlify</strong>: Let's Encrypt (automatisch)</li>
+<li><strong>Vercel</strong>: Automatische SSL-verstrekking</li>
+<li><strong>GitHub Pages</strong>: Automatisch voor aangepaste domeinen</li>
+<li><strong>Firebase</strong>: Google-beheerde certificaten</li>
+</ul>
+<h3 id="handmatige-ssl-configuratie">Handmatige SSL-configuratie</h3>
+<p>Voor geavanceerde setups heb je mogelijk handmatige SSL-configuratie nodig:</p>
+<div class="codehilite"><pre><span></span><span class="k">server</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">443</span><span class="w"> </span><span class="s">ssl</span><span class="w"> </span><span class="s">http2</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">docs.jouwbedrijf.com</span><span class="p">;</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="kn">ssl_certificate</span><span class="w"> </span><span class="s">/path/to/certificate.crt</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">ssl_certificate_key</span><span class="w"> </span><span class="s">/path/to/private.key</span><span class="p">;</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="kn">ssl_protocols</span><span class="w"> </span><span class="s">TLSv1.2</span><span class="w"> </span><span class="s">TLSv1.3</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">ssl_ciphers</span><span class="w"> </span><span class="s">ECDHE-RSA-AES256-GCM-SHA512:DHE-RSA-AES256-GCM-SHA512</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">ssl_prefer_server_ciphers</span><span class="w"> </span><span class="no">off</span><span class="p">;</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://localhost:3000</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Host</span><span class="w"> </span><span class="nv">$host</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Real-IP</span><span class="w"> </span><span class="nv">$remote_addr</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2 id="geavanceerde-configuratie">Geavanceerde configuratie</h2>
+<h3 id="meerdere-domeinen">Meerdere domeinen</h3>
+<p>Configureer meerdere domeinen voor dezelfde site:</p>
+<div class="codehilite"><pre><span></span><span class="c1">// netlify.toml</span>
+<span class="p">[[</span><span class="err">redirec</span><span class="kc">ts</span><span class="p">]]</span>
+<span class="w">  </span><span class="kc">fr</span><span class="err">om</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="s2">"https://old-docs.com/*"</span>
+<span class="w">  </span><span class="kc">t</span><span class="err">o</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="s2">"https://docs.jouwbedrijf.com/:splat"</span>
+<span class="w">  </span><span class="err">s</span><span class="kc">tatus</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">301</span>
+<span class="w">  </span><span class="kc">f</span><span class="err">orce</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="kc">true</span>
+
+<span class="p">[[</span><span class="err">redirec</span><span class="kc">ts</span><span class="p">]]</span>
+<span class="w">  </span><span class="kc">fr</span><span class="err">om</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="s2">"https://help.jouwbedrijf.com/*"</span>
+<span class="w">  </span><span class="kc">t</span><span class="err">o</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="s2">"https://docs.jouwbedrijf.com/:splat"</span>
+<span class="w">  </span><span class="err">s</span><span class="kc">tatus</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">301</span>
+<span class="w">  </span><span class="kc">f</span><span class="err">orce</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="kc">true</span>
+</pre></div>
+
+<h3 id="internationalisatie-domeinen">Internationalisatie domeinen</h3>
+<p>Stel verschillende domeinen in voor verschillende talen:</p>
+<div class="codehilite"><pre><span></span>docs.jouwbedrijf.com (Nederlands)
+docs-en.jouwbedrijf.com (Engels)
+docs-de.jouwbedrijf.com (Duits)
+docs-fr.jouwbedrijf.com (Frans)
+</pre></div>
+
+<h3 id="cdn-integratie">CDN integratie</h3>
+<p>Configureer CDN voor betere prestaties:</p>
+<div class="codehilite"><pre><span></span><span class="c1">// vercel.json</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="nt">"functions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"app/api/**/*.js"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"maxDuration"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"regions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"iad1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"sfo1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"fra1"</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"github"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2 id="beveiligings-beste-praktijken">Beveiligings beste praktijken</h2>
+<h3 id="hsts-configuratie">HSTS configuratie</h3>
+<p>Schakel HTTP Strict Transport Security in:</p>
+<div class="codehilite"><pre><span></span>Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+</pre></div>
+
+<h3 id="content-security-policy">Content Security Policy</h3>
+<div class="codehilite"><pre><span></span>Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; media-src 'self'; object-src 'none'; child-src 'self'; frame-ancestors 'none'; form-action 'self'; base-uri 'self';
+</pre></div>
+
+<h3 id="aanvullende-beveiligingsheaders">Aanvullende beveiligingsheaders</h3>
+<div class="codehilite"><pre><span></span>X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: geolocation=(), microphone=(), camera=()
+</pre></div>
+
+<h2 id="prestatie-optimalisatie">Prestatie-optimalisatie</h2>
+<h3 id="dns-optimalisatie">DNS-optimalisatie</h3>
+<ol>
+<li><strong>Gebruik snelle DNS-providers</strong>: Cloudflare, Route 53, of Google DNS</li>
+<li><strong>Minimaliseer DNS-lookups</strong>: Verminder externe resource-afhankelijkheden</li>
+<li><strong>Schakel DNS prefetching in</strong>: <code>&lt;link rel="dns-prefetch" href="#"&gt;</code></li>
+</ol>
+<h3 id="caching-strategie">Caching-strategie</h3>
+<div class="codehilite"><pre><span></span># Statische assets
+Cache-Control: public, max-age=31536000, immutable
+
+# HTML-bestanden
+Cache-Control: public, max-age=0, must-revalidate
+
+# API-responsen
+Cache-Control: public, max-age=300, s-maxage=600
+</pre></div>
+
+<h2 id="monitoring-en-analytics">Monitoring en analytics</h2>
+<h3 id="domein-gezondheidsmonitoring">Domein gezondheidsmonitoring</h3>
+<p>Stel monitoring in voor je aangepaste domein:</p>
+<div class="codehilite"><pre><span></span><span class="c1">// Basis uptime monitoring</span>
+<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">checkDomainHealth</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">'https://docs.jouwbedrijf.com/health'</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">ok</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Domein is gezond'</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">'Domein gezondheidscheck gefaald'</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">'Domein is onbereikbaar:'</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">setInterval</span><span class="p">(</span><span class="nx">checkDomainHealth</span><span class="p">,</span><span class="w"> </span><span class="mf">300000</span><span class="p">);</span><span class="w"> </span><span class="c1">// Check elke 5 minuten</span>
+</pre></div>
+
+<h3 id="analytics-configuratie">Analytics configuratie</h3>
+<div class="codehilite"><pre><span></span><span class="cm">&lt;!-- Google Analytics --&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">async</span> <span class="na">src</span><span class="o">=</span><span class="s">"https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="nb">window</span><span class="p">.</span><span class="nx">dataLayer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">dataLayer</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">[];</span>
+<span class="w">  </span><span class="kd">function</span><span class="w"> </span><span class="nx">gtag</span><span class="p">(){</span><span class="nx">dataLayer</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nb">arguments</span><span class="p">);}</span>
+<span class="w">  </span><span class="nx">gtag</span><span class="p">(</span><span class="s1">'js'</span><span class="p">,</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Date</span><span class="p">());</span>
+<span class="w">  </span><span class="nx">gtag</span><span class="p">(</span><span class="s1">'config'</span><span class="p">,</span><span class="w"> </span><span class="s1">'GA_TRACKING_ID'</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">custom_map</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="s1">'custom_parameter'</span><span class="o">:</span><span class="w"> </span><span class="s1">'dimension1'</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">});</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+
+<h2 id="probleemoplossing">Probleemoplossing</h2>
+<h3 id="veelvoorkomende-problemen">Veelvoorkomende problemen</h3>
+<h4 id="dns-propagatie-vertragingen">DNS-propagatie vertragingen</h4>
+<p>DNS-wijzigingen kunnen tot 48 uur duren om wereldwijd volledig te propageren:</p>
+<div class="codehilite"><pre><span></span><span class="c1"># Check DNS-propagatie</span>
+dig<span class="w"> </span>docs.jouwbedrijf.com
+nslookup<span class="w"> </span>docs.jouwbedrijf.com
+</pre></div>
+
+<p>Online tools:
+- whatsmydns.net
+- dnschecker.org</p>
+<h4 id="ssl-certificaat-problemen">SSL-certificaat problemen</h4>
+<p>Veelvoorkomende SSL-problemen en oplossingen:</p>
+<ol>
+<li><strong>Mixed content fouten</strong>: Zorg ervoor dat alle resources HTTPS gebruiken</li>
+<li><strong>Certificaat mismatch</strong>: Verifieer dat domeinnamen overeenkomen met certificaat</li>
+<li><strong>Verlopen certificaten</strong>: Stel auto-vernieuwing in</li>
+</ol>
+<h4 id="omleidingslussen">Omleidingslussen</h4>
+<p>Voorkom oneindige omleidingen:</p>
+<div class="codehilite"><pre><span></span># Incorrect
+https://docs.jouwbedrijf.com → https://docs.jouwbedrijf.com
+
+# Correct  
+http://docs.jouwbedrijf.com → https://docs.jouwbedrijf.com
+</pre></div>
+
+<h4 id="prestatieproblemen">Prestatieproblemen</h4>
+<p>Diagnoseer en los prestatieproblemen op:</p>
+<div class="codehilite"><pre><span></span><span class="c1"># Test site snelheid</span>
+curl<span class="w"> </span>-w<span class="w"> </span><span class="s2">"@curl-format.txt"</span><span class="w"> </span>-o<span class="w"> </span>/dev/null<span class="w"> </span>-s<span class="w"> </span><span class="s2">"https://docs.jouwbedrijf.com"</span>
+
+<span class="c1"># Check response headers</span>
+curl<span class="w"> </span>-I<span class="w"> </span><span class="s2">"https://docs.jouwbedrijf.com"</span>
+</pre></div>
+
+<h3 id="debug-tools">Debug tools</h3>
+<h4 id="dns-debugging">DNS debugging</h4>
+<div class="codehilite"><pre><span></span><span class="c1"># Check A-records</span>
+dig<span class="w"> </span>A<span class="w"> </span>docs.jouwbedrijf.com
+
+<span class="c1"># Check CNAME-records  </span>
+dig<span class="w"> </span>CNAME<span class="w"> </span>docs.jouwbedrijf.com
+
+<span class="c1"># Check MX-records</span>
+dig<span class="w"> </span>MX<span class="w"> </span>jouwbedrijf.com
+
+<span class="c1"># Trace DNS-resolutie</span>
+dig<span class="w"> </span>+trace<span class="w"> </span>docs.jouwbedrijf.com
+</pre></div>
+
+<h4 id="ssl-debugging">SSL debugging</h4>
+<div class="codehilite"><pre><span></span><span class="c1"># Check SSL-certificaat</span>
+openssl<span class="w"> </span>s_client<span class="w"> </span>-connect<span class="w"> </span>docs.jouwbedrijf.com:443<span class="w"> </span>-servername<span class="w"> </span>docs.jouwbedrijf.com
+
+<span class="c1"># Test SSL-configuratie</span>
+curl<span class="w"> </span>-vI<span class="w"> </span>https://docs.jouwbedrijf.com
+</pre></div>
+
+<h2 id="migratie-strategieen">Migratie strategieën</h2>
+<h3 id="zero-downtime-migratie">Zero-downtime migratie</h3>
+<p>Plan voor naadloze domeinmigratie:</p>
+<ol>
+<li><strong>Nieuw domein voorbereiden</strong>: Volledig instellen en testen</li>
+<li><strong>DNS bijwerken met lage TTL</strong>: Propagatietijd verkorten</li>
+<li><strong>Traffic monitoren</strong>: Letten op eventuele problemen</li>
+<li><strong>Omleidingen implementeren</strong>: Gebruikers naar nieuw domein leiden</li>
+<li><strong>Interne links bijwerken</strong>: Alle referenties wijzigen</li>
+<li><strong>Gebruikers informeren</strong>: De wijziging communiceren</li>
+</ol>
+<h3 id="migratie-checklist">Migratie checklist</h3>
+<ul>
+<li>[ ] Domein eigendom geverifieerd</li>
+<li>[ ] DNS-records geconfigureerd</li>
+<li>[ ] SSL-certificaat actief</li>
+<li>[ ] Omleidingen geïmplementeerd</li>
+<li>[ ] Interne links bijgewerkt</li>
+<li>[ ] Externe referenties geïnformeerd</li>
+<li>[ ] Analytics tracking bijgewerkt</li>
+<li>[ ] SEO-overwegingen aangepakt</li>
+<li>[ ] Monitoring alerts geconfigureerd</li>
+<li>[ ] Rollback plan voorbereid</li>
+</ul>
+<h2 id="beste-praktijken">Beste praktijken</h2>
+<ol>
+<li><strong>Kies betekenisvolle subdomeinen</strong>: Gebruik duidelijke, beschrijvende namen</li>
+<li><strong>Schakel overal HTTPS in</strong>: Serveer nooit content over HTTP</li>
+<li><strong>Monitor domein gezondheid</strong>: Stel uptime monitoring in</li>
+<li><strong>Plan voor rampen</strong>: Heb backup domeinen klaar</li>
+<li><strong>Documenteer je setup</strong>: Houd configuratierecords bij</li>
+<li><strong>Regelmatig onderhoud</strong>: Review en update configuraties</li>
+<li><strong>Beveiliging eerst</strong>: Implementeer juiste headers en beleid</li>
+<li><strong>Prestaties zijn belangrijk</strong>: Optimaliseer voor snelheid en betrouwbaarheid</li>
+</ol>
+<h2 id="conclusie">Conclusie</h2>
+<p>Het instellen van een aangepast domein voor je Dockit documentatiesite verbetert je merkpresentatie en biedt een professionele ervaring voor je gebruikers. Volg de platform-specifieke instructies, implementeer juiste beveiligingsmaatregelen en monitor je domein's gezondheid voor de beste resultaten.</p>
+<p>Vergeet niet om grondig te testen in een staging-omgeving voordat je wijzigingen aanbrengt aan productie domeinen, en heb altijd een rollback plan klaar voor het geval van problemen.</p>
+        </article>
+        <nav class="docs-pagination" aria-label="Pagination"><a class="page-link prev" href="github.html"><small>← Page précédente</small><span>Intégration GitHub</span></a></nav>
+      </div>
+
+    <!-- Troisième colonne : table des matières + scrollspy (js/docs.js) -->
+    <aside class="docs-toc">
+      <h2 class="toc-title">Sur cette page</h2>
+      <nav class="toc-list" id="toc-list"><a class="toc-h2" href="#apercu">Aperçu</a><a class="toc-h2" href="#prerequis">Prérequis</a><a class="toc-h2" href="#options-de-configuration-de-domaine">Options de configuration de domaine</a><a class="toc-h3" href="#configuration-de-sous-domaine-recommande">Configuration de sous-domaine (Recommandé)</a><a class="toc-h3" href="#configuration-de-domaine-racine">Configuration de domaine racine</a><a class="toc-h3" href="#configuration-basee-sur-le-chemin">Configuration basée sur le chemin</a><a class="toc-h2" href="#installation-specifique-a-la-plateforme">Installation spécifique à la plateforme</a><a class="toc-h3" href="#configuration-netlify">Configuration Netlify</a><a class="toc-h3" href="#vercel-configuratie">Vercel configuratie</a><a class="toc-h3" href="#github-pages-configuratie">GitHub Pages configuratie</a><a class="toc-h3" href="#firebase-hosting-configuratie">Firebase Hosting configuratie</a><a class="toc-h2" href="#dns-provider-voorbeelden">DNS Provider voorbeelden</a><a class="toc-h3" href="#cloudflare-dns">Cloudflare DNS</a><a class="toc-h3" href="#google-domains">Google Domains</a><a class="toc-h3" href="#namecheap-dns">Namecheap DNS</a><a class="toc-h3" href="#route-53-aws">Route 53 (AWS)</a><a class="toc-h2" href="#ssl-certificaat-configuratie">SSL-certificaat configuratie</a><a class="toc-h3" href="#automatische-ssl-aanbevolen">Automatische SSL (Aanbevolen)</a><a class="toc-h3" href="#handmatige-ssl-configuratie">Handmatige SSL-configuratie</a><a class="toc-h2" href="#geavanceerde-configuratie">Geavanceerde configuratie</a><a class="toc-h3" href="#meerdere-domeinen">Meerdere domeinen</a><a class="toc-h3" href="#internationalisatie-domeinen">Internationalisatie domeinen</a><a class="toc-h3" href="#cdn-integratie">CDN integratie</a><a class="toc-h2" href="#beveiligings-beste-praktijken">Beveiligings beste praktijken</a><a class="toc-h3" href="#hsts-configuratie">HSTS configuratie</a><a class="toc-h3" href="#content-security-policy">Content Security Policy</a><a class="toc-h3" href="#aanvullende-beveiligingsheaders">Aanvullende beveiligingsheaders</a><a class="toc-h2" href="#prestatie-optimalisatie">Prestatie-optimalisatie</a><a class="toc-h3" href="#dns-optimalisatie">DNS-optimalisatie</a><a class="toc-h3" href="#caching-strategie">Caching-strategie</a><a class="toc-h2" href="#monitoring-en-analytics">Monitoring en analytics</a><a class="toc-h3" href="#domein-gezondheidsmonitoring">Domein gezondheidsmonitoring</a><a class="toc-h3" href="#analytics-configuratie">Analytics configuratie</a><a class="toc-h2" href="#probleemoplossing">Probleemoplossing</a><a class="toc-h3" href="#veelvoorkomende-problemen">Veelvoorkomende problemen</a><a class="toc-h3" href="#debug-tools">Debug tools</a><a class="toc-h2" href="#migratie-strategieen">Migratie strategieën</a><a class="toc-h3" href="#zero-downtime-migratie">Zero-downtime migratie</a><a class="toc-h3" href="#migratie-checklist">Migratie checklist</a><a class="toc-h2" href="#beste-praktijken">Beste praktijken</a><a class="toc-h2" href="#conclusie">Conclusie</a></nav>
+    </aside>
+    </div>
+  </main>
+
+  <!-- Bouton flottant (mobile) : ouvre le tiroir de la sidebar -->
+  <button class="sidebar-open-btn" id="sidebar-open-btn" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16"/><path d="M4 12h10"/><path d="M4 18h16"/></svg>
+    Sommaire
+  </button>
+  <div class="nav-backdrop" id="sidebar-backdrop"></div>
+
+  <!-- ==================== PIED DE PAGE ==================== -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-col"><h4>Rejoignez notre communauté</h4><ul><li><a href="https://github.com/themefisher/dockit/discussions" target="_blank" rel="noopener">Discussions GitHub</a></li><li><a href="#">Communauté Discord</a></li><li><a href="#">Mises à jour Twitter</a></li><li><a href="#">Guide de contribution</a></li></ul></div>
+      <div class="footer-col"><h4>Liens utiles</h4><ul><li><a href="../getting-started/introduction/overview.html">Commencer</a></li><li><a href="../../privacy-policy.html">Politique de confidentialité</a></li><li><a href="../../terms-conditions.html">Conditions d'utilisation</a></li><li><a href="../../about.html">À propos</a></li><li><a href="../../../404.html">Dépannage</a></li></ul></div>
+      <div class="footer-col"><h4>Ressources</h4><ul><li><a href="../getting-started/introduction/overview.html">Centre de documentation</a></li><li><a href="#">Galerie de thèmes</a></li><li><a href="#">Bonnes pratiques</a></li><li><a href="#">Conseils de performance</a></li><li><a href="#">Guide de migration</a></li></ul></div>
+      <div class="footer-col">
+        <h4>Restons en contact</h4>
+        <form class="mail-form" action="#" aria-label="Newsletter">
+          <input type="email" placeholder="Entrez votre e-mail" required aria-label="Email">
+          <button type="submit" aria-label="OK">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21.0477 3.05293C18.8697 0.707361 2.48648 6.4532 2.50001 8.551C2.51535 10.9299 8.89809 11.6617 10.6672 12.1581C11.7311 12.4565 12.016 12.7625 12.2613 13.8781C13.3723 18.9305 13.9301 21.4435 15.2014 21.4996C17.2278 21.5892 23.1733 5.342 21.0477 3.05293Z" stroke="currentColor" stroke-width="1.5"/><path d="M11.5 12.5L15 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </form>
+        <p class="mail-form-feedback" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p class="copyright">Conçu et développé par <a href="https://themefisher.com" target="_blank" rel="noopener">Themefisher</a> Copyright © 2025.</p>
+      <div class="socials"><a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a><a href="https://slack.com/" target="_blank" rel="noopener" aria-label="Slack"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zm1.271 0a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zm0 1.271a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zm10.122 2.521a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zm-1.268 0a2.528 2.528 0 0 1-2.523 2.521 2.528 2.528 0 0 1-2.52-2.521V2.522A2.528 2.528 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zm-2.523 10.122a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.528 2.528 0 0 1-2.52-2.522v-2.522h2.52zm0-1.268a2.528 2.528 0 0 1-2.523-2.523 2.528 2.528 0 0 1 2.523-2.52h6.313A2.528 2.528 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/></svg></a><a href="https://www.github.com/" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a><a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a></div>
+    </div>
+  </footer>
+
+  <!-- ==================== MODALE DE RECHERCHE ==================== -->
+  <div class="search-modal" id="search-modal" hidden>
+    <div class="search-modal-backdrop" data-search-close></div>
+    <div class="search-modal-panel" role="dialog" aria-modal="true" aria-label="Rechercher dans la documentation">
+      <form class="search-form" role="search" onsubmit="return false;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input id="search-input" type="text" placeholder="Rechercher dans la documentation…" autocomplete="off" aria-label="Rechercher dans la documentation">
+        <kbd>Esc</kbd>
+      </form>
+      <div class="search-results" id="search-results"></div>
+      <div class="search-hint">
+        <span><kbd>↑</kbd><kbd>↓</kbd> pour naviguer</span>
+        <span><kbd>↵</kbd> pour ouvrir</span>
+        <span><kbd>Esc</kbd> pour fermer</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts : l'index doit être chargé avant search.js -->
+  <script src="../../../js/search-index.js"></script>
+  <script src="../../../js/main.js"></script>
+  <script src="../../../js/search.js"></script>
+  <script src="../../../js/docs.js"></script>
+</body>
+</html>
